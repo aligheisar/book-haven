@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: "DMSerifDisplay";
+    src: url(fonts/DMSerifDisplay-Regular.ttf) format(truetype);
+  }
+
+  @font-face {
+    font-family: "Inder";
+    src: url(fonts/Inder-Regular.ttf) format(truetype);
+  }
+
+  :root {
+    --background: 18 22 25;
+    --primary: 201 194 159;
+    --surface: 30 36 40;
+    --secondary-surface: 44 51 55;
+    --text: 240 237 227;
+    --secondary-text: 166 162 140;
+    --secondary: 147 124 82;
+    --secondary-hover: 137 114 72;
+    --secondary-active: 130 107 65;
+    --on-secondary: 90 80 53;
+    --on-secondary-hover: 85 75 48;
+    --on-secondary-active: 80 70 43;
+    --error: 135 55 55;
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#root {
+  @apply h-dvh bg-background pt-14;
+}
+
+.backdrop {
+  opacity: 0;
+
+  & > section {
+    translate: 0 -20px;
+    opacity: 1;
+  }
+}
+
+.backdrop.active {
+  opacity: 1;
+
+  & > section {
+    translate: 0 0;
+    opacity: 1;
+  }
+}
