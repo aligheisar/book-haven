@@ -57,7 +57,14 @@ export default function AuthProvider({ children }) {
   let registerUser = async (email, password, fullName, username) => {
     try {
       let { user } = await register(email, password, fullName, username);
-      if (user) setUser(user);
+      if (user) {
+        setUser(user);
+        addNotif({
+          title: "Account Registered",
+          desc: "You successfuly make an account",
+          type: "success",
+        });
+      }
     } catch (error) {
       addNotif({
         ...formatError(error),
@@ -69,7 +76,14 @@ export default function AuthProvider({ children }) {
   let loginUser = async (email, password) => {
     try {
       let { user } = await login(email, password);
-      if (user) setUser(user);
+      if (user) {
+        setUser(user);
+        addNotif({
+          title: "Logged in",
+          desc: "You successfuly Logged in",
+          type: "success",
+        });
+      }
     } catch (error) {
       addNotif({
         ...formatError(error),
@@ -82,6 +96,11 @@ export default function AuthProvider({ children }) {
     try {
       await logout();
       setUser(null);
+      addNotif({
+        title: "Logged Out",
+        desc: "You logged out",
+        type: "normal",
+      });
     } catch (error) {
       addNotif({
         ...formatError(error),
