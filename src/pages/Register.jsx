@@ -1,9 +1,11 @@
 import { useState } from "react";
 import Form from "../Components/ui/Form.tsx";
 import FormInput from "../Components/ui/FormInput.jsx";
-import { signup } from "../supabase/auth.js";
+import { GetAuth } from "../Context/AuthContext.jsx";
 
 let Register = () => {
+  let { registerUser } = GetAuth();
+
   let [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -22,7 +24,7 @@ let Register = () => {
     let { email, password, fullName, username } = formData;
 
     if (email && password) {
-      await signup(email, password, fullName, username);
+      await registerUser(email, password, fullName, username);
     }
   };
 

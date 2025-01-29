@@ -1,11 +1,13 @@
 import { useState } from "react";
 import Form from "../Components/ui/Form.tsx";
 import FormInput from "../Components/ui/FormInput.jsx";
-import { login } from "../supabase/auth.js";
 import { useNavigate } from "react-router-dom";
+import { GetAuth } from "../Context/AuthContext.jsx";
 
 let Login = () => {
   let [formData, setFormData] = useState({ email: "", password: "" });
+
+  let { loginUser } = GetAuth();
 
   let navigate = useNavigate();
 
@@ -20,7 +22,7 @@ let Login = () => {
     let { email, password } = formData;
 
     if (email && password) {
-      await login(email, password);
+      await loginUser(email, password);
     }
     navigate("/");
   };
