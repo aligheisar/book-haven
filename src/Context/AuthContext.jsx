@@ -58,12 +58,12 @@ export default function AuthProvider({ children }) {
     try {
       let { user } = await register(email, password, fullName, username);
       if (user) {
-        setUser(user);
         addNotif({
           title: "Account Registered",
           desc: "You successfuly make an account",
           type: "success",
         });
+        setUser(user);
       }
     } catch (error) {
       addNotif({
@@ -77,12 +77,12 @@ export default function AuthProvider({ children }) {
     try {
       let { user } = await login(email, password);
       if (user) {
-        setUser(user);
         addNotif({
           title: "Logged in",
           desc: "You successfuly Logged in",
           type: "success",
         });
+        setUser(user);
       }
     } catch (error) {
       addNotif({
