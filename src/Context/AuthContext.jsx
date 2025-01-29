@@ -7,7 +7,7 @@ import {
 } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getSession } from "../supabase/session";
-import { login, register } from "../supabase/auth";
+import { login, logout, register } from "../supabase/auth";
 import { formatError } from "../util/format";
 import Loading from "../Components/Loading";
 import { GetNotifi } from "./NotifiContext";
@@ -54,7 +54,8 @@ export default function AuthProvider({ children }) {
 
   let registerUser = async (email, password, fullName, username) => {
     try {
-      await register(email, password, fullName, username);
+      let { user } = await register(email, password, fullName, username);
+      if (user) setUser(user);
     } catch (error) {
       addNotif({
         ...formatError(error),
@@ -65,7 +66,8 @@ export default function AuthProvider({ children }) {
 
   let loginUser = async (email, password) => {
     try {
-      await login(email, password);
+      let { user } = await login(email, password);
+      if (user) setUser(user);
     } catch (error) {
       addNotif({
         ...formatError(error),
@@ -74,9 +76,24 @@ export default function AuthProvider({ children }) {
     }
   };
 
-  const value = { user, setLoading, loginUser, registerUser };
+  let logoutUser = async () => {
+    try {
+      await logout();
+      setUser(null);
+    } catch (error) {
+      addNotif({
+        ...formatError(error),
+        type: "danger",
+      });
+    }
+  };
 
-  if (loading) return <Loading />;
+  const value = { user, registerUser, loginUser, logoutUser };
 
-  return <authContext.Provider value={value}>{children}</authContext.Provider>;
+  return (
+    <authContext.Provider value={value}>
+      {loading && <Loading />}
+      {children}
+    </authContext.Provider>
+  );
 }

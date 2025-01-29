@@ -2,10 +2,12 @@ import { useState } from "react";
 import Button from "./ui/Button.tsx";
 import { Logout } from "./ui/Icons";
 import Modal from "./ui/Modal";
-import { logout } from "../supabase/auth";
 import { useNavigate } from "react-router-dom";
+import { GetAuth } from "../Context/AuthContext.jsx";
 
 let ProfileCard = ({ user }) => {
+  let { logoutUser } = GetAuth();
+
   let [isOpen, setIsOpen] = useState(false);
 
   let navigate = useNavigate();
@@ -16,7 +18,7 @@ let ProfileCard = ({ user }) => {
   };
 
   let userLogout = () => {
-    logout();
+    logoutUser();
     setIsOpen(false);
     navigate("/login");
   };
