@@ -1,5 +1,5 @@
 import { supabase } from "./client";
-import { getUserById } from "./shared";
+import { getUserById, isUsernameUnique } from "./shared";
 async function insertUser(id, fullName, username) {
   const { error } = await supabase.from("users").insert({
     id,
@@ -11,6 +11,14 @@ async function insertUser(id, fullName, username) {
 }
 
 export async function register(email, password, fullName, username) {
+  let isUnique = await isUsernameUnique(username);
+
+  let errorObj = {
+    status: "invadid Username",
+    code: "this Username is Already tooken",
+  };
+
+  if (!isUnique) throw errorObj;
   const { data: authData, error: authError } = await supabase.auth.signUp({
     email,
     password,
