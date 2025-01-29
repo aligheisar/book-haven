@@ -10,6 +10,7 @@ export async function getSession() {
   if (sessionData && sessionData.session) {
     let userData = await getUserById(sessionData.session.user.id);
 
+    if (!userData) return null;
     return {
       user: {
         fullName: userData.full_name,
