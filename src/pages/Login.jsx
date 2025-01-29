@@ -1,15 +1,12 @@
 import { useState } from "react";
 import Form from "../Components/ui/Form.tsx";
 import FormInput from "../Components/ui/FormInput.jsx";
-import { useNavigate } from "react-router-dom";
 import { GetAuth } from "../Context/AuthContext.jsx";
 
 let Login = () => {
   let [formData, setFormData] = useState({ email: "", password: "" });
 
   let { loginUser } = GetAuth();
-
-  let navigate = useNavigate();
 
   let handleChange = (e) => {
     let { value, name } = e.target;
@@ -23,7 +20,6 @@ let Login = () => {
 
     if (email && password) {
       loginUser(email, password);
-      // navigate("/");
     }
   };
   return (
