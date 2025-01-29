@@ -1,7 +1,13 @@
 import { useId } from "react";
 import Input from "./Input.tsx";
 
-let FormInput = ({ type = "text", label, placeholder, ...inputProps }) => {
+let FormInput = ({
+  type = "text",
+  label,
+  placeholder,
+  error,
+  ...inputProps
+}) => {
   let id = useId();
 
   return (
@@ -16,6 +22,7 @@ let FormInput = ({ type = "text", label, placeholder, ...inputProps }) => {
         placeholder={placeholder}
         {...inputProps}
       />
+      {error && <p className="ml-2 text-danger">{error}</p>}
     </section>
   );
 };
