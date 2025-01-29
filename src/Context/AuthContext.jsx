@@ -20,33 +20,41 @@ export default function AuthProvider({ children }) {
   let { addNotif } = GetNotifi();
 
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
 
   const initializeUser = useCallback(async () => {
     setLoading(true);
-    const newUser = await getSession();
-    setUser(newUser?.[0]);
-    setLoading(false);
 
+    const { newUser } = await getSession();
+    if (newUser) setUser(newUser);
+
+    setLoading(false);
+  }, []);
+
+  let checkUrl = useCallback(() => {
     if (
-      (newUser && location.pathname === "/login") ||
-      (newUser && location.pathname === "/register") ||
-      (!newUser && location.pathname === "/dashbord")
+      (user && location.pathname === "/login") ||
+      (user && location.pathname === "/register") ||
+      (!user && location.pathname === "/dashbord")
     ) {
       navigate("/");
     }
-  }, [location.pathname, navigate]);
+  }, [location.pathname, user, navigate]);
 
   useEffect(() => {
-    initializeUser();
-  }, [initializeUser]);
+    checkUrl();
+  }, [checkUrl]);
 
-  let loginUser = async (email, password) => {
+  useEffect(() => {
+    if (!user) initializeUser();
+  }, [initializeUser, user]);
+
+  let registerUser = async (email, password, fullName, username) => {
     try {
-      await login(email, password);
+      await register(email, password, fullName, username);
     } catch (error) {
       addNotif({
         ...formatError(error),
@@ -55,9 +63,9 @@ export default function AuthProvider({ children }) {
     }
   };
 
-  let registerUser = async (email, password, fullName, username) => {
+  let loginUser = async (email, password) => {
     try {
-      await register(email, password, fullName, username);
+      await login(email, password);
     } catch (error) {
       addNotif({
         ...formatError(error),

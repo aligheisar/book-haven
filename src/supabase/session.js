@@ -15,10 +15,12 @@ export async function getSession() {
     if (userError) throw userError;
 
     return {
-      fullName: userData.full_name,
-      email: sessionData.session.user.email,
-      username: userData.username,
-      avatarUrl: userData.avatar_url,
+      user: {
+        fullName: userData.full_name,
+        email: sessionData.session.user.email,
+        username: userData.username,
+        avatarUrl: userData.avatar_url,
+      },
     };
   }
   return null;
