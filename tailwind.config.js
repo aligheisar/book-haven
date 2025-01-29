@@ -21,7 +21,9 @@ module.exports = {
         "on-secondary-hover": "rgb(var(--on-secondary-hover) / <alpha-value>)",
         "on-secondary-active":
           "rgb(var(--on-secondary-active) / <alpha-value>)",
-        error: "rgb(var(--error) / <alpha-value>)",
+        danger: "rgb(var(--danger) / <alpha-value>)",
+        warning: "rgb(var(--warning) / <alpha-value>)",
+        success: "rgb(var(--success) / <alpha-value>)",
       },
     },
   },
