@@ -22,9 +22,9 @@ let Login = () => {
     let { email, password } = formData;
 
     if (email && password) {
-      await loginUser(email, password);
+      loginUser(email, password);
+      // navigate("/");
     }
-    navigate("/");
   };
   return (
     <section className="flex min-h-full w-full flex-1 items-center justify-center py-3">

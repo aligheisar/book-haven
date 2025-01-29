@@ -20,7 +20,7 @@ export default function AuthProvider({ children }) {
   let { addNotif } = GetNotifi();
 
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -28,8 +28,10 @@ export default function AuthProvider({ children }) {
   const initializeUser = useCallback(async () => {
     setLoading(true);
 
-    const { newUser } = await getSession();
-    if (newUser) setUser(newUser);
+    const data = await getSession();
+    if (data && data.user) {
+      if (data.user) setUser(data.user);
+    }
 
     setLoading(false);
   }, []);
@@ -45,12 +47,12 @@ export default function AuthProvider({ children }) {
   }, [location.pathname, user, navigate]);
 
   useEffect(() => {
-    checkUrl();
-  }, [checkUrl]);
-
-  useEffect(() => {
     if (!user) initializeUser();
   }, [initializeUser, user]);
+
+  useEffect(() => {
+    checkUrl();
+  }, [checkUrl]);
 
   let registerUser = async (email, password, fullName, username) => {
     try {
@@ -90,10 +92,7 @@ export default function AuthProvider({ children }) {
 
   const value = { user, registerUser, loginUser, logoutUser };
 
-  return (
-    <authContext.Provider value={value}>
-      {loading && <Loading />}
-      {children}
-    </authContext.Provider>
-  );
+  if (loading) return <Loading />;
+
+  return <authContext.Provider value={value}>{children}</authContext.Provider>;
 }

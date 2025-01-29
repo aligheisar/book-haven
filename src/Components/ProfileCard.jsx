@@ -32,11 +32,11 @@ let ProfileCard = ({ user }) => {
         }}
         className="flex items-center gap-2 rounded-full bg-secondary-surface p-1 pl-3"
       >
-        <p>{user.full_name}</p>
+        <p>{user.fullName}</p>
         <img
           width={37}
           height={37}
-          src={user.avatar_url}
+          src={user.avatarUrl}
           alt="profile"
           className="h-[37px] w-[37px] rounded-full bg-surface"
         />
