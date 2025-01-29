@@ -1,18 +1,21 @@
 .loading-container {
-  width: 50%;
-  height: 50%;
+  width: min(250px, 100%);
+  height: min(200px, 100%);
   border-radius: 18px;
-  background-color: rgb(var(--background) / .3);
+  background-color: rgb(var(--surface) / .6);
   position: fixed;
   backdrop-filter: blur(16px);
+  box-shadow: 0 10px 30px rgb(0 0 0 / .15);
   top: 50%;
   left: 50%;
   translate: -50% -50%;
   display: grid;
   place-content: center;
+  z-index: 999;
 }
 
 .loading-items {
+  margin-top: 45px;
   animation: float 0.8s infinite;
 }
 
