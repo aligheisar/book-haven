@@ -1,4 +1,5 @@
 import { supabase } from "./client";
+import { getUserById } from "./shared";
 
 export async function getSession() {
   const { data: sessionData, error: sessionError } =
@@ -7,12 +8,7 @@ export async function getSession() {
   if (sessionError) throw sessionError;
 
   if (sessionData && sessionData.session) {
-    let { data: userData, error: userError } = await supabase
-      .from("users")
-      .select("*")
-      .eq("id", sessionData.session.user.id);
-
-    if (userError) throw userError;
+    let userData = await getUserById(sessionData.session.user.id);
 
     return {
       user: {

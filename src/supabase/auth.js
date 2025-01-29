@@ -1,13 +1,5 @@
 import { supabase } from "./client";
-
-async function getUserById(id) {
-  const { data, error } = await supabase.from("users").select("*").eq("id", id);
-
-  if (error) throw error;
-
-  return data;
-}
-
+import { getUserById } from "./shared";
 async function insertUser(id, fullName, username) {
   const { error } = await supabase.from("users").insert({
     id,
@@ -30,7 +22,7 @@ export async function register(email, password, fullName, username) {
 
   insertUser(userId, fullName, username);
 
-  let { avatar_url } = getUserById(userId);
+  let { avatar_url } = await getUserById(userId);
 
   return {
     user: {
@@ -50,9 +42,7 @@ export async function login(email, password) {
 
   if (error) throw error;
 
-  let { userId } = data.user.id;
-
-  let { avatar_url, full_name, username } = getUserById(userId);
+  let { avatar_url, full_name, username } = await getUserById(data.user.id);
 
   return {
     user: {
