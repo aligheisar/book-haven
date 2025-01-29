@@ -21,7 +21,7 @@ let Modal = ({ children, onOpen, onClose, className, ...props }) => {
   useEffect(() => {
     if (!isOpen) closeModal();
     setTimeout(() => {
-      backdrop.current.classList.add("active");
+      backdrop?.current?.classList.add("active");
     }, 0);
   }, [isOpen, closeModal]);
 
