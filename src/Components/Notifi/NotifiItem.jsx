@@ -14,7 +14,7 @@ let NotifiItem = ({ notif, className }) => {
   };
 
   let classes = cn(
-    "notif-item transition-opacity overflow-hidden duration-300 px-3 py-2 relative rounded-md text-text fill-text w-full backdrop-blur-xl shadow-lg",
+    "notif-item transition-opacity overflow-hidden duration-300 px-3 py-2 pb-3 relative rounded-md text-text fill-text w-full backdrop-blur-xl shadow-lg",
     varients[notif?.type],
     className,
   );
