@@ -5,7 +5,7 @@ let Home = () => {
   let { addNotif } = GetNotifi();
 
   return (
-    <section>
+    <>
       <Button
         onClick={() =>
           addNotif({ title: "ali", desc: "new ali", type: "normal" })
@@ -13,7 +13,7 @@ let Home = () => {
       >
         Add Notif
       </Button>
-    </section>
+    </>
   );
 };
 
