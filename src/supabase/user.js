@@ -1,6 +1,7 @@
 import { AVATAR_IMAGES } from "../config/constants";
 import { supabase } from "./client";
 import { uploadAvatarImage } from "./storage";
+import { validateInputs } from "../util/validate";
 
 ///!!!!!!
 export async function getUserProfile(userId) {
@@ -25,6 +26,17 @@ export async function checkIfFollowing(followerId, followingId) {
 }
 
 async function changeFullName(username, value) {
+  let response = validateInputs("fullName", value);
+
+  if (response) {
+    let error = {
+      status: "Faild",
+      message: "full name is not valid",
+    };
+
+    throw error;
+  }
+
   const { data, error } = await supabase
     .from("users")
     .update({ full_name: value })
@@ -32,7 +44,7 @@ async function changeFullName(username, value) {
 
   if (error) throw error;
 
-  return { success: true };
+  return { success: true, data, error };
 }
 
 async function changeUsername(username, value) {

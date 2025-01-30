@@ -6,7 +6,7 @@ export let loginSchema = z.object({
 });
 
 export let registerSchema = z.object({
-  fullName: z.string(),
+  fullName: z.string().min(3),
   username: z
     .string()
     .min(4)
