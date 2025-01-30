@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { cn } from "../util/cn.ts";
 import Input from "./ui/Input.tsx";
 import { Done, Edit, Loading } from "./ui/Icons";
-import useKeybordShortcuts from "../hooks/use-keybord-shortcuts.jsx";
+import useKeybordShortcuts from "../hooks/use-keybord-shortcuts";
 
 let EditableText = ({ content, changeHandler, className, ...props }) => {
   const [editMode, setEditMode] = useState(false);

@@ -13,7 +13,6 @@
     src: url(fonts/Inder-Regular.ttf) format(truetype);
   }
 
-
   :root {
     --background: 18 22 25;
     --primary: 201 194 159;
@@ -56,7 +55,6 @@
 }
 
 @keyframes bar {
-
   100% {
     width: 0%;
   }
@@ -87,7 +85,7 @@
 .backdrop {
   opacity: 0;
 
-  &>section {
+  & > section {
     translate: 0 -20px;
     opacity: 1;
   }
@@ -96,7 +94,7 @@
 .backdrop.active {
   opacity: 1;
 
-  &>section {
+  & > section {
     translate: 0 0;
     opacity: 1;
   }

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Backdrop from "../Backdrop";
-import useKeybordShortcuts from "../../hooks/use-keybord-shortcuts.jsx";
+import useKeybordShortcuts from "../../hooks/use-keybord-shortcuts";
 import { cn } from "../../util/cn.ts";
 
 let Modal = ({ children, onOpen, onClose, className, ...props }) => {

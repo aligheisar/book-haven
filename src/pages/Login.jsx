@@ -1,10 +1,10 @@
 import { useState } from "react";
 import Form from "../Components/ui/Form.tsx";
-import FormInput from "../Components/ui/FormInput.jsx";
-import { GetAuth } from "../Context/AuthContext.jsx";
-import { loginSchema } from "../config/schema.js";
-import { GetNotifi } from "../Context/NotifiContext.jsx";
-import { validateInputs } from "../util/validate.js";
+import FormInput from "../Components/ui/FormInput";
+import { GetAuth } from "../Context/AuthContext";
+import { loginSchema } from "../config/schema";
+import { GetNotifi } from "../Context/NotifiContext";
+import { validateInputs } from "../util/validate";
 
 let Login = () => {
   let { addNotif } = GetNotifi();

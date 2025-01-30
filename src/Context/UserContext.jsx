@@ -7,6 +7,7 @@ import {
 } from "react";
 import { getSession } from "../supabase/session";
 import { GetNetwork } from "./NetworkContext";
+import { changeUserInformation } from "../supabase/user";
 
 let UserContext = createContext();
 
@@ -18,7 +19,7 @@ let UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const initializeUser = useCallback(async () => {
+  let initializeUser = useCallback(async () => {
     try {
       setLoading(true);
 
@@ -38,7 +39,16 @@ let UserProvider = ({ children }) => {
   useEffect(() => {
     if (!user) initializeUser();
   }, [initializeUser, user]);
-  let value = { user, setUser, loading, setLoading };
+
+  let changeAvatar = async (file, fileName) => {
+    let response = await changeUserInformation(user.username, "avatar", {
+      file,
+      fileName,
+    });
+    return response;
+  };
+
+  let value = { user, setUser, loading, setLoading, changeAvatar };
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
 

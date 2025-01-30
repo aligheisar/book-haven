@@ -3,7 +3,7 @@ import ProfileCard from "./ProfileCard";
 import { Search } from "./ui/Icons";
 import Button from "./ui/Button.tsx";
 import Input from "./ui/Input.tsx";
-import { GetUser } from "../Context/UserContext.jsx";
+import { GetUser } from "../Context/UserContext";
 
 let Navbar = () => {
   let { user } = GetUser();
