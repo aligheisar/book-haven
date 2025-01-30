@@ -67,10 +67,4 @@ We welcome contributions! If you'd like to improve the app, feel free to submit 
 
 ---
 
-## 📄 License
-
-This project is licensed under the **MIT License**.
-
----
-
 🔥 **Stay tuned for upcoming features!**
