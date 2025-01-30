@@ -37,6 +37,7 @@ export default function AuthProvider({ children }) {
   }, []);
 
   let checkUrl = useCallback(() => {
+    if (loading) return;
     if (
       (user && location.pathname === "/login") ||
       (user && location.pathname === "/register") ||
@@ -44,7 +45,7 @@ export default function AuthProvider({ children }) {
     ) {
       navigate("/");
     }
-  }, [location.pathname, user, navigate]);
+  }, [location.pathname, user, navigate, loading]);
 
   useEffect(() => {
     if (!user) initializeUser();
