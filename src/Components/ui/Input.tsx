@@ -7,11 +7,12 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   varient?: InputVarient;
   icon: ReactNode;
   className?: string;
+  inputClass?: string;
 }
 
 let Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ varient, icon, className, ...props }, ref) => {
-    let baseClasses = `relative text-lg border-0 ${icon ? "pl-9" : "px-3"} fill-secondary-text h-[45px] text-text outline-none rounded-lg transition-border focus-within:fill-text duration-200`;
+  ({ varient, icon, className, inputClass, ...props }, ref) => {
+    let baseClasses = `relative text-lg border-0 ${icon ? "pl-9" : "px-3"} fill-secondary-text h-[45px] text-text outline-none rounded-lg transition-border focus-within:fill-text duration-200 `;
 
     let varientClasses: Record<InputVarient, string> = {
       filled:
@@ -31,7 +32,10 @@ let Input = forwardRef<HTMLInputElement, InputProps>(
         <span className="absolute left-2 top-1/2 -translate-y-1/2">{icon}</span>
         <input
           ref={ref}
-          className="h-full w-full border-none bg-transparent outline-none placeholder:text-base placeholder:font-light placeholder:text-secondary-text placeholder:opacity-90 placeholder:transition-colors focus-within:placeholder:text-text"
+          className={cn([
+            "h-full w-full border-none bg-transparent outline-none placeholder:text-base placeholder:font-light placeholder:text-secondary-text placeholder:opacity-90 placeholder:transition-colors focus-within:placeholder:text-text disabled:opacity-50",
+            inputClass,
+          ])}
           {...props}
         />
       </section>
