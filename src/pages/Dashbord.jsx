@@ -1,11 +1,8 @@
-import { GetUser } from "../Context/UserContext";
 import DashbordSection from "../Components/DashbordSection";
 import UserInformation from "../Components/UserInformation";
 import SectionTitle from "../Components/SectionTitle";
 
 let Dashbord = () => {
-  let { user } = GetUser();
-
   return (
     <section className="flex h-full w-full flex-col items-center gap-4 pt-6">
       <DashbordSection>
