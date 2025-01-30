@@ -1,19 +1,18 @@
+import { GetAuth } from "../Context/AuthContext";
 import DashbordSection from "../Components/DashbordSection";
 import UserInformation from "../Components/UserInformation";
-import { GetAuth } from "../Context/AuthContext";
+import SectionTitle from "../Components/SectionTitle";
 
 let Dashbord = () => {
   let { user } = GetAuth();
 
   return (
-    <section className="flex h-full w-full flex-col items-center gap-2 pt-6">
+    <section className="flex h-full w-full flex-col items-center gap-4 pt-6">
       <DashbordSection>
-        <h1 className="font-serif text-2xl text-secondary-text">
-          Account Information
-        </h1>
+        <SectionTitle>Account Information</SectionTitle>
         <UserInformation />
       </DashbordSection>
-      <DashbordSection>SOME OTHER INFO</DashbordSection>
+      {/* <DashbordSection>SOME OTHER INFO</DashbordSection> */}
     </section>
   );
 };
