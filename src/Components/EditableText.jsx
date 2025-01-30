@@ -12,7 +12,7 @@ let EditableText = ({ content, changeHandler, className, ...props }) => {
 
   let done = async (accept = true) => {
     let value = input.current.value.trim();
-    if (value && accept) {
+    if (value && accept && value !== content) {
       setLoading(true);
       await changeHandler(value);
       setLoading(false);
@@ -35,11 +35,14 @@ let EditableText = ({ content, changeHandler, className, ...props }) => {
   return editMode ? (
     <div className="relative h-[45px] w-full">
       <Input
+        varient="filled"
         ref={input}
         autoFocus
         disabled={loading}
+        onKeyDown={(e) => (e.keyCode === 13 ? done(true) : null)}
         onBlur={() => done(true)}
         defaultValue={content}
+        className="bg-surface/30"
         inputClass="text-center text-xl"
         {...props}
       />
