@@ -1,9 +1,9 @@
 import { useState } from "react";
-import Button from "./ui/Button.tsx";
-import { Logout } from "./ui/Icons";
-import Modal from "./ui/Modal";
 import { useNavigate } from "react-router-dom";
 import { GetAuth } from "../Context/AuthContext.jsx";
+import Button from "./ui/Button.tsx";
+import Modal from "./ui/Modal";
+import { Logout } from "./ui/Icons";
 
 let ProfileCard = ({ user }) => {
   let { logoutUser } = GetAuth();

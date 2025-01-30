@@ -3,10 +3,10 @@ import ProfileCard from "./ProfileCard";
 import { Search } from "./ui/Icons";
 import Button from "./ui/Button.tsx";
 import Input from "./ui/Input.tsx";
-import { GetAuth } from "../Context/AuthContext.jsx";
+import { GetUser } from "../Context/UserContext.jsx";
 
 let Navbar = () => {
-  let { user } = GetAuth();
+  let { user } = GetUser();
   return (
     <nav className="fixed left-0 top-0 flex h-14 w-full items-center justify-between bg-surface px-11 text-text">
       <Link to="/">
