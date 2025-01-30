@@ -1,5 +1,6 @@
 import { useId } from "react";
 import Input from "./Input.tsx";
+import InputError from "../InputError";
 
 let FormInput = ({
   type = "text",
@@ -22,7 +23,7 @@ let FormInput = ({
         placeholder={placeholder}
         {...inputProps}
       />
-      {error && <p className="ml-2 text-danger">{error}</p>}
+      {error && <InputError>{error}</InputError>}
     </section>
   );
 };
