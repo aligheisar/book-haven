@@ -33,11 +33,15 @@ let EditableText = ({
       setLoading(true);
       let error = await changeHandler(value);
       setLoading(false);
-      if (!error) setInputValue({ value, error: null });
+      if (error && error.status) {
+        setInputValue({ value: content, error: null });
+      } else {
+        setInputValue({ value, error: null });
+      }
     } else {
-      setEditMode(false);
       setInputValue({ value: content, error: null });
     }
+    setEditMode(false);
   };
 
   let startEdit = () => {
