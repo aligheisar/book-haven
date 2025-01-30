@@ -1,13 +1,10 @@
 import { useRef, useState } from "react";
 import { GetUser } from "../Context/UserContext";
-import { GetNotifi } from "../Context/NotifiContext";
 import { Loading } from "./ui/Icons";
 import { cn } from "../util/cn.ts";
-import { formatError } from "../util/format";
 
 let DashbordAvatar = ({ className, ...props }) => {
   const { changeAvatar, user } = GetUser();
-  const { addNotif } = GetNotifi();
 
   const [loading, setLoading] = useState(false);
 
@@ -18,22 +15,9 @@ let DashbordAvatar = ({ className, ...props }) => {
   };
 
   let updateAvatar = async (file, fileName) => {
-    try {
-      setLoading(true);
-      let data = await changeAvatar(file, fileName);
-      setLoading(false);
-      if (data.success) {
-        addNotif({
-          title: "Avatar changes",
-          desc: "avatar picture succesfully changed",
-          type: "success",
-        });
-      }
-    } catch (error) {
-      addNotif({ ...formatError(error), type: "danger" });
-    } finally {
-      setLoading(false);
-    }
+    setLoading(true);
+    await changeAvatar(file, fileName);
+    setLoading(false);
   };
 
   let handleInputChange = async (e) => {
