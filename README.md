@@ -41,8 +41,8 @@ npm install
 Create a `.env` file in the root folder and add:
 
 ```
-VITE_SUPABASE_URL=your_supabase_url
-VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+SUPABASE_URL=your_supabase_url
+SUPABASE_KEY=your_supabase_anon_key
 ```
 
 ### **4️⃣ Run the App**
