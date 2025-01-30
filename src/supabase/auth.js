@@ -1,5 +1,6 @@
 import { supabase } from "./client";
 import { getUserById, isUsernameUnique } from "./shared";
+
 async function insertUser(id, fullName, username) {
   const { error } = await supabase.from("users").insert({
     id,

@@ -1,9 +1,20 @@
 import { supabase } from "./client";
 
-export async function uploadImage(bucket, file, fileName) {
+export async function uploadBookImage(file, fileName) {
   const { data, error } = await supabase.storage
-    .from(bucket)
+    .from("book-images")
     .upload(fileName, file);
+  if (error) throw error;
+  return data;
+}
+
+export async function uploadAvatarImage(file, fileName) {
+  const { error, data } = await supabase.storage
+    .from("avatar-images")
+    .update(fileName, file, {
+      upsert: true,
+      cacheControl: "0",
+    });
   if (error) throw error;
   return data;
 }

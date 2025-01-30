@@ -1,5 +1,8 @@
+import { AVATAR_IMAGES } from "../config/constants";
 import { supabase } from "./client";
+import { uploadAvatarImage } from "./storage";
 
+///!!!!!!
 export async function getUserProfile(userId) {
   const { data, error } = await supabase
     .from("users")
@@ -19,4 +22,56 @@ export async function checkIfFollowing(followerId, followingId) {
 
   if (error) throw error;
   return data.length > 0;
+}
+
+async function changeFullName(username, value) {
+  const { data, error } = await supabase
+    .from("users")
+    .update({ full_name: value })
+    .eq("username", username);
+
+  if (error) throw error;
+
+  return { success: true };
+}
+
+async function changeUsername(username, value) {
+  const { data, error } = await supabase
+    .from("users")
+    .update({ username: value })
+    .eq("username", username);
+
+  if (error) throw error;
+
+  return { success: true };
+}
+
+async function changeAvatar(username, fileData) {
+  let { file, fileName } = fileData;
+
+  let fileExtention = fileName.split(".").pop();
+  let imageName = [username, fileExtention].join(".");
+  let imageUrl = AVATAR_IMAGES + imageName;
+  await uploadAvatarImage(file, imageName);
+  const { data, error } = await supabase
+    .from("users")
+    .update({ avatar_url: imageUrl })
+    .eq("username", username);
+
+  if (error) throw error;
+
+  return { success: true, data, error };
+}
+
+export async function changeUserInformation(username, colName, value) {
+  switch (colName) {
+    case "full_name":
+      return changeFullName(username, value);
+    case "username":
+      return changeUsername(username, value);
+    case "avatar":
+      return changeAvatar(username, value);
+    default:
+      throw new Error("field is invalid");
+  }
 }
