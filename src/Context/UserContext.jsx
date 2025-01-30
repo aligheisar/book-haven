@@ -86,6 +86,7 @@ let UserProvider = ({ children }) => {
         ...formatError(error),
         type: "danger",
       });
+      return error;
     }
   };
 
