@@ -1,6 +1,8 @@
 import { BrowserRouter } from "react-router-dom";
+import UserProvider from "./UserContext";
 import AuthProvider from "./AuthContext";
 import NotifiProvider from "./NotifiContext";
+import NetworkProvider from "./NetworkContext";
 
 let Providers = ({ children }) => {
   return (
@@ -14,9 +16,13 @@ let Providers = ({ children }) => {
         v7_startTransition: true,
       }}
     >
-      <NotifiProvider>
-        <AuthProvider>{children}</AuthProvider>
-      </NotifiProvider>
+      <NetworkProvider>
+        <NotifiProvider>
+          <UserProvider>
+            <AuthProvider>{children}</AuthProvider>
+          </UserProvider>
+        </NotifiProvider>
+      </NetworkProvider>
     </BrowserRouter>
   );
 };
