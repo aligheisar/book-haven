@@ -4,7 +4,7 @@ import SectionTitle from "../Components/SectionTitle";
 
 let Dashbord = () => {
   return (
-    <section className="flex h-full w-full items-start justify-center gap-4 px-11 pt-6">
+    <section className="flex h-full w-full items-start justify-center gap-4 pt-6">
       <DashbordSection>
         <SectionTitle>Account Information</SectionTitle>
         <UserInformation />
