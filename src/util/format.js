@@ -12,5 +12,5 @@ export let formatError = (error) => {
     desc = error.message;
   }
 
-  return { title, desc };
+  return { title, desc: desc.split("_").join(" ") };
 };
