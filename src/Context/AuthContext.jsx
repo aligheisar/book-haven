@@ -32,10 +32,10 @@ export default function AuthProvider({ children }) {
     checkUrl();
   }, [checkUrl]);
 
-  let registerUser = async (email, password, fullName, username) => {
+  let registerUser = async (email, password, username, fullName) => {
     try {
       setLoading(true);
-      let { user } = await register(email, password, fullName, username);
+      let { user } = await register(email, password, username, fullName);
       setLoading(false);
       if (user) {
         addNotif({
