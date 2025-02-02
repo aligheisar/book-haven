@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashbord from "./pages/Dashbord";
+import NewBook from "./pages/NewBook";
 
 let App = () => {
   return (
@@ -14,6 +15,7 @@ let App = () => {
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="dashbord" element={<Dashbord />} />
+        <Route path="new-book" element={<NewBook />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>

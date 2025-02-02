@@ -22,7 +22,8 @@ export default function AuthProvider({ children }) {
     if (
       (user && location.pathname === "/login") ||
       (user && location.pathname === "/register") ||
-      (!user && location.pathname === "/dashbord")
+      (!user && location.pathname === "/dashbord") ||
+      (!user && location.pathname === "/new-book")
     ) {
       navigate("/");
     }

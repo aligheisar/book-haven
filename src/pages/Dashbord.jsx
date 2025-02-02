@@ -1,6 +1,9 @@
 import DashbordSection from "../Components/DashbordSection";
 import UserInformation from "../Components/UserInformation";
 import SectionTitle from "../Components/SectionTitle";
+import Button from "../Components/ui/Button.tsx";
+import { Add } from "../Components/ui/Icons";
+import { Link } from "react-router-dom";
 
 let Dashbord = () => {
   return (
@@ -10,7 +13,14 @@ let Dashbord = () => {
         <UserInformation />
       </DashbordSection>
       <DashbordSection className="max-w-none flex-1">
-        <SectionTitle className="text-start">Your Books</SectionTitle>
+        <div className="flex items-center justify-between">
+          <SectionTitle className="text-start">Your Books</SectionTitle>
+          <Link to="/new-book">
+            <Button varient="outlined" Icon={<Add inher size="18" />}>
+              Add Book
+            </Button>
+          </Link>
+        </div>
       </DashbordSection>
     </section>
   );
