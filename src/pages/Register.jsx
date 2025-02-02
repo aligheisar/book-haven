@@ -56,8 +56,8 @@ let Register = () => {
       });
       return;
     }
-    let { email, password, fullName, username } = formValues;
-    await registerUser(email, password, fullName, username);
+    let { email, password, username, fullName } = formValues;
+    await registerUser(email, password, username, fullName);
   };
 
   return (
