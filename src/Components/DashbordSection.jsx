@@ -2,7 +2,7 @@ import { cn } from "../util/cn.ts";
 
 let DashbordSection = ({ className, children, ...props }) => {
   let classes = cn([
-    "flex flex-col gap-5 bg-surface w-full max-w-[420px] px-4 py-6 rounded-xl",
+    "flex flex-col gap-7 bg-surface w-full max-w-[380px] px-4 py-6 rounded-xl",
     className,
   ]);
   return (

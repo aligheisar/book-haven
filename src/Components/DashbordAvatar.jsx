@@ -32,7 +32,7 @@ let DashbordAvatar = ({ className, ...props }) => {
   return (
     <div
       className={cn([
-        `relative size-12 rounded-full ${loading ? "opacity-50" : ""} overflow-hidden`,
+        `relative size-14 rounded-full ${loading ? "opacity-50" : ""} overflow-hidden shadow-lg`,
         className,
       ])}
     >

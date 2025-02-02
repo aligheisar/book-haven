@@ -6,6 +6,7 @@ import useKeybordShortcuts from "../hooks/use-keybord-shortcuts";
 
 let EditableText = ({
   content,
+  title,
   changeHandler,
   validator,
   className,
@@ -66,11 +67,12 @@ let EditableText = ({
   ) : (
     <h2
       className={cn([
-        "group relative flex h-[45px] w-full items-center justify-center text-center text-xl text-text",
+        "group relative flex h-[45px] w-full items-center justify-center gap-2 text-center text-xl text-text",
         className,
       ])}
       {...props}
     >
+      <span className="font-serif text-base opacity-45">{title}:</span>
       {content}
       <span
         onClick={startEdit}
