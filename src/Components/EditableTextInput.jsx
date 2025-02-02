@@ -1,7 +1,6 @@
 import InputError from "./InputError";
-import Loading from "./Loading";
-import { Done } from "./ui/Icons";
 import Input from "./ui/Input.tsx";
+import { Done, Loading } from "./ui/Icons";
 
 let EditableTextInput = ({
   loading,
