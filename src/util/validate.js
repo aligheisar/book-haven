@@ -20,7 +20,7 @@ export let validateInputs = (name, value) => {
   if (name === "fullName") {
     if (value.trim().length < 3) return "full Name must be at least 3 char";
     if (value.trim().length > 12)
-      return "full Name must be at smaller than 12 char";
+      return "full Name can't be grater than 12 char";
   }
   return null;
 };
