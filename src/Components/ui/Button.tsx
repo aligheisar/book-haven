@@ -17,10 +17,10 @@ let Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     let varientClasses: Record<ButtonVarient, string> = {
       normal:
-        "bg-secondary text-text hover:bg-secondary-hover active:bg-secondary-active",
-      dim: "bg-on-secondary text-primary hover:bg-on-secondary-hover active:bg-on-secondary-active",
+        "bg-secondary text-text fill-text hover:bg-secondary-hover active:bg-secondary-active",
+      dim: "bg-on-secondary text-primary fill-primary hover:bg-on-secondary-hover active:bg-on-secondary-active",
       outlined:
-        "border bg-secodary/0 border-secondary/90 text-primary hover:bg-secondary/5 hover:border-secondary/95 active:bg-secondary/10 active:border-secondary/100",
+        "border bg-secodary/0 border-secondary/90 text-primary fill-primary hover:bg-secondary/5 hover:border-secondary/95 active:bg-secondary/10 active:border-secondary/100",
     };
 
     let classes = cn([
