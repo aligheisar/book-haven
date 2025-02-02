@@ -47,17 +47,6 @@ async function changeFullName(username, value) {
   return { success: true, data, error };
 }
 
-async function changeUsername(username, value) {
-  const { data, error } = await supabase
-    .from("users")
-    .update({ username: value })
-    .eq("username", username);
-
-  if (error) throw error;
-
-  return { success: true };
-}
-
 async function changeAvatar(username, fileData) {
   let { file, fileName } = fileData;
 
@@ -79,8 +68,6 @@ export async function changeUserInformation(username, colName, value) {
   switch (colName) {
     case "full_name":
       return changeFullName(username, value);
-    case "username":
-      return changeUsername(username, value);
     case "avatar":
       return changeAvatar(username, value);
     default:
