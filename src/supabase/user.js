@@ -2,6 +2,7 @@ import { AVATAR_IMAGES } from "../config/constants";
 import { supabase } from "./client";
 import { uploadAvatarImage } from "./storage";
 import { validateInputs } from "../util/validate";
+import { getUserByUsername } from "./shared";
 
 ///!!!!!!
 export async function getUserProfile(userId) {
@@ -54,14 +55,15 @@ async function changeAvatar(username, fileData) {
   let imageName = [username, fileExtention].join(".");
   let imageUrl = AVATAR_IMAGES + imageName;
   await uploadAvatarImage(file, imageName);
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("users")
     .update({ avatar_url: imageUrl })
     .eq("username", username);
 
   if (error) throw error;
 
-  return { success: true, data, error };
+  let { avatar_url } = await getUserByUsername(username);
+  return { success: true, avatar_url, error: null };
 }
 
 export async function changeUserInformation(username, colName, value) {

@@ -51,6 +51,11 @@ let UserProvider = ({ children }) => {
       });
 
       if (response.success) {
+        const updatedAvatarUrl = `${response.avatar_url}?t=${new Date().getTime()}`;
+        setUser((prevState) => ({
+          ...prevState,
+          avatar_url: updatedAvatarUrl,
+        }));
         addNotif({
           title: "Avatar changes",
           desc: "avatar picture succesfully changed",
