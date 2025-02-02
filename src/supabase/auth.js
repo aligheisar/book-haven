@@ -1,44 +1,39 @@
 import { supabase } from "./client";
-import { getUserById, isUsernameUnique } from "./shared";
+import { getUserById } from "./shared";
 
-async function insertUser(id, fullName, username) {
+async function insertUser(id, username, fullName, email) {
   const { error } = await supabase.from("users").insert({
     id,
     username,
     full_name: fullName,
+    email,
   });
 
-  if (error) throw error;
+  if (error) {
+    return { success: false, error };
+  }
+  return { success: true, error: null };
 }
 
-export async function register(email, password, fullName, username) {
-  let isUnique = await isUsernameUnique(username);
-
-  let errorObj = {
-    status: "invadid Username",
-    code: "this Username is Already tooken",
-  };
-
-  if (!isUnique) throw errorObj;
-  const { data: authData, error: authError } = await supabase.auth.signUp({
+export async function register(email, password, username, fullName) {
+  const { data, error } = await supabase.auth.signUp({
     email,
     password,
   });
+  if (error) throw error;
 
-  if (authError) throw authError;
+  await supabase.auth.getSession();
 
-  const userId = authData.user.id;
-
-  insertUser(userId, fullName, username);
-
-  let { avatar_url } = await getUserById(userId);
+  let insertRes = await insertUser(data.user.id, username, fullName, email);
+  if (insertRes.error) throw insertRes.error;
 
   return {
     user: {
-      fullName,
       email,
       username,
-      avatarUrl: avatar_url,
+      fullName,
+      avatarUrl:
+        "https://hxcipahuobjiwjhnfrsa.supabase.co/storage/v1/object/public/avatar-images//avatar_placeholder.jpg",
     },
   };
 }
