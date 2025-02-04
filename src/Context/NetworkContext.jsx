@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import useIsOnline from "../hooks/is-online";
+import useIsOnline from "../hooks/use-is-online";
 import NoInternet from "../pages/NoInternet";
 
 let NetworkContext = createContext();
