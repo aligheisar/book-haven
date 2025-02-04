@@ -5,11 +5,6 @@ import BookCoverContainer from "./BookCoverContainer";
 let FormBookImage = ({ url, handleFileChange }) => {
   let fileInput = useRef();
 
-  let handleChange = async (e) => {
-    await handleFileChange(e);
-    fileInput.current.value = "";
-  };
-
   let openImagePicker = () => {
     fileInput.current.click();
   };
@@ -18,12 +13,16 @@ let FormBookImage = ({ url, handleFileChange }) => {
     <BookCoverContainer onClick={openImagePicker}>
       <input
         ref={fileInput}
-        onChange={handleChange}
+        onChange={handleFileChange}
         type="file"
         accept=".jpg"
         style={{ display: "none" }}
       />
-      {url ? <img src={url} alt="" /> : <BookPlaceholderImage />}
+      {url ? (
+        <img src={url} className="h-full w-full object-cover" alt="" />
+      ) : (
+        <BookPlaceholderImage />
+      )}
     </BookCoverContainer>
   );
 };

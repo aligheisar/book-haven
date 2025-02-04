@@ -7,7 +7,7 @@ import FormBookImage from "../Components/ui/FormBookImage";
 import { GetNewBook } from "../Context/NewBookContex.jsx";
 
 let NewBook = () => {
-  let { formData, handleFileChange, handleFormChange, imageUrl } = GetNewBook();
+  let { formData, handleFileChange, handleFormChange, image } = GetNewBook();
 
   return (
     <section className="flex h-full items-center">
@@ -15,7 +15,7 @@ let NewBook = () => {
         <SectionTitle>New Book</SectionTitle>
         <form className="flex flex-col gap-4">
           <div className="flex gap-3">
-            <FormBookImage handleFileChange={handleFileChange} url={imageUrl} />
+            <FormBookImage handleFileChange={handleFileChange} url={image} />
             <div>
               <FormInput
                 label="Title"
