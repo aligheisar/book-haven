@@ -5,7 +5,7 @@ import useKeybordShortcuts from "../../hooks/use-keybord-shortcuts";
 import { cn } from "../../util/cn.ts";
 
 let Modal = ({ children, onOpen, onClose, className, ...props }) => {
-  let [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(true);
 
   let backdrop = useRef();
 

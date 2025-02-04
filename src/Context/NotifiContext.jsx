@@ -6,7 +6,7 @@ let NotifiContext = createContext();
 export let GetNotifi = () => useContext(NotifiContext);
 
 let NotifiProvider = ({ children }) => {
-  let [notifications, setNotifications] = useState([]);
+  const [notifications, setNotifications] = useState([]);
 
   let addNotif = (notif) => {
     let id = nanoid();

@@ -8,7 +8,7 @@ import { Logout } from "./ui/Icons";
 let ProfileCard = ({ user }) => {
   let { logoutUser } = GetAuth();
 
-  let [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   let navigate = useNavigate();
 

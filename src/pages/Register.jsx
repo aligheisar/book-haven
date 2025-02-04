@@ -11,7 +11,7 @@ let Register = () => {
 
   let { registerUser } = GetAuth();
 
-  let [formData, setFormData] = useState({
+  const [formData, setFormData] = useState({
     email: { value: "", error: null },
     password: { value: "", error: null },
     confirmPassword: { value: "", error: null },

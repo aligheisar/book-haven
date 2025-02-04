@@ -9,7 +9,7 @@ import { validateInputs } from "../util/validate";
 let Login = () => {
   let { addNotif } = GetNotifi();
 
-  let [formData, setFormData] = useState({
+  const [formData, setFormData] = useState({
     email: { value: "", error: null },
     password: { value: "", error: null },
   });
