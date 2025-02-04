@@ -20,9 +20,7 @@ let Providers = ({ children }) => {
       <NetworkProvider>
         <NotifiProvider>
           <UserProvider>
-            <AuthProvider>
-              <NewBookProvider>{children}</NewBookProvider>
-            </AuthProvider>
+            <AuthProvider>{children}</AuthProvider>
           </UserProvider>
         </NotifiProvider>
       </NetworkProvider>

@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashbord from "./pages/Dashbord";
 import NewBook from "./pages/NewBook";
+import NewBookProvider from "./Context/NewBookContex";
 
 let App = () => {
   return (
@@ -15,7 +16,14 @@ let App = () => {
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="dashbord" element={<Dashbord />} />
-        <Route path="new-book" element={<NewBook />} />
+        <Route
+          path="new-book"
+          element={
+            <NewBookProvider>
+              <NewBook />
+            </NewBookProvider>
+          }
+        />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>
