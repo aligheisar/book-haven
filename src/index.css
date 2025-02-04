@@ -43,6 +43,17 @@
   @apply h-dvh bg-background pt-14;
 }
 
+.custom-scroll::-webkit-scrollbar {
+  border-radius: 999px;
+  width: 8px;
+  background: rgb(var(--surface) / .4);
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgb(var(--background) / .6);
+}
+
 .notif-item:before {
   content: "";
   width: 100%;
@@ -60,32 +71,10 @@
   }
 }
 
-/* @keyframes notif {
-  0% {
-    opacity: 0;
-    translate: 50px 0;
-  }
-
-  10% {
-    opacity: 1;
-    translate: 0 0;
-  }
-
-  90% {
-    opacity: 1;
-    translate: 0 0;
-  }
-
-  100% {
-    opacity: 0;
-    translate: -50px 0;
-  }
-} */
-
 .backdrop {
   opacity: 0;
 
-  & > section {
+  &>section {
     translate: 0 -20px;
     opacity: 1;
   }
@@ -94,7 +83,7 @@
 .backdrop.active {
   opacity: 1;
 
-  & > section {
+  &>section {
     translate: 0 0;
     opacity: 1;
   }
