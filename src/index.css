@@ -43,15 +43,21 @@
   @apply h-dvh bg-background pt-14;
 }
 
-.custom-scroll::-webkit-scrollbar {
+.custom-scroll::-webkit-scrollbar,
+.custom-scroll-light::-webkit-scrollbar {
   border-radius: 999px;
   width: 8px;
-  background: rgb(var(--surface) / .4);
+  background: rgb(var(--surface) / .6);
 }
 
 .custom-scroll::-webkit-scrollbar-thumb {
   border-radius: 999px;
   background: rgb(var(--background) / .6);
+}
+
+.custom-scroll-light::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgb(var(--secondary-surface) / .6);
 }
 
 .notif-item:before {
