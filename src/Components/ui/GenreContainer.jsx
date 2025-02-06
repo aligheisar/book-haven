@@ -1,4 +1,4 @@
-import { GetNewBook } from "../../Context/NewBookContex";
+import { GetNewBook } from "../../Context/NewBookContext";
 import { cn } from "../../util/cn.ts";
 import GenreItem from "./GenreItem";
 
@@ -8,10 +8,12 @@ let GenreContainer = ({ className, genres, ...props }) => {
   return (
     <section
       {...props}
-      className={cn("flex w-full flex-col gap-2 px-1", className)}
+      className={cn(
+        "custom-scroll-light mb-1 max-h-[140px] flex-1 overflow-y-auto rounded",
+        className,
+      )}
     >
-      <label className="text-text">Genres</label>
-      <div className="flex min-h-16 flex-wrap items-start gap-1 overflow-y-auto">
+      <div className="flex flex-wrap items-start gap-1">
         {genres.map((i) => (
           <GenreItem key={i} onClick={() => handleRemoveGenre(i)}>
             {i}

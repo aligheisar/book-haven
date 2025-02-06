@@ -3,7 +3,6 @@ import UserProvider from "./UserContext";
 import AuthProvider from "./AuthContext";
 import NotifiProvider from "./NotifiContext";
 import NetworkProvider from "./NetworkContext";
-import NewBookProvider from "./NewBookContex";
 
 let Providers = ({ children }) => {
   return (

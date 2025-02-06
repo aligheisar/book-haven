@@ -1,11 +1,18 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { getGenres } from "../supabase/books";
+import { addBook, getGenres } from "../supabase/books";
+import { GetUser } from "./UserContext";
+import { validateNewBookInputs } from "../util/validate";
+import { newBookSchema } from "../config/schema";
+import { GetNotifi } from "./NotifiContext";
 
-let NewBookContex = createContext();
+let NewBookContext = createContext();
 
-export let GetNewBook = () => useContext(NewBookContex);
+export let GetNewBook = () => useContext(NewBookContext);
 
 let NewBookProvider = ({ children }) => {
+  let { user } = GetUser();
+  let { addNotif } = GetNotifi();
+
   const [formData, setFormData] = useState({
     title: { value: "", error: null },
     description: { value: "", error: null },
@@ -37,15 +44,45 @@ let NewBookProvider = ({ children }) => {
     );
   }, [genres, selectedGenres, genreInput]);
 
-  let handleFormSubmit = (e) => {
+  let handleFormSubmit = async (e) => {
     e.preventDefault();
+
+    let formValues = {
+      title: formData.title.value,
+      description: formData.description.value,
+      price: parseFloat(formData.price.value),
+    };
+    let response = newBookSchema.safeParse(formValues);
+
+    if (!response.success) {
+      addNotif({
+        type: "danger",
+        title: "Invalid Inputs",
+        desc: "Form inputs are not Valid",
+      });
+      return;
+    }
+
+    let { title, description, price } = response.data;
+
+    await addBook(
+      user.username,
+      title,
+      description,
+      price,
+      imageFile,
+      selectedGenres,
+    );
   };
 
   let handleFormChange = (e) => {
     let { name, value } = e.target;
+
+    let error = validateNewBookInputs(name, value);
+
     setFormData((prev) => ({
       ...prev,
-      [name]: { ...prev[name], value },
+      [name]: { error, value },
     }));
   };
 
@@ -68,13 +105,8 @@ let NewBookProvider = ({ children }) => {
 
   let handleGenreInputChange = (e) => {
     let value = e.target.value;
-    let trimValue = value.trim();
 
     setGenreInput(value);
-
-    if (!trimValue) {
-    } else {
-    }
   };
 
   let clearGenreInput = () => {
@@ -112,7 +144,7 @@ let NewBookProvider = ({ children }) => {
     handleAddGenre,
   };
   return (
-    <NewBookContex.Provider value={value}>{children}</NewBookContex.Provider>
+    <NewBookContext.Provider value={value}>{children}</NewBookContext.Provider>
   );
 };
 

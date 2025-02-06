@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import useKeybordShortcuts from "../../hooks/use-keybord-shortcuts";
 import useScroll from "../../hooks/use-scroll";
 import { cn } from "../../util/cn.ts";
-import { GetNewBook } from "../../Context/NewBookContex";
+import { GetNewBook } from "../../Context/NewBookContext";
 
 let AutoCompelete = ({ className, ...props }) => {
   let { showGenres, filteredGenres, handleAddGenre, loadingGenres } =
