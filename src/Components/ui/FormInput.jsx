@@ -1,6 +1,7 @@
 import { useId } from "react";
 import Input from "./Input.tsx";
 import InputError from "../InputError";
+import FormLabel from "./FormLable";
 
 let FormInput = ({
   type = "text",
@@ -13,9 +14,7 @@ let FormInput = ({
 
   return (
     <section className="flex flex-col gap-2">
-      <label htmlFor={id} className="ml-2 select-none text-lg text-text">
-        {label}
-      </label>
+      <FormLabel id={id}>{label}</FormLabel>
       <Input
         varient="outlined"
         id={id}

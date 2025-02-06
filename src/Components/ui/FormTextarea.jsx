@@ -1,16 +1,24 @@
 import { useId } from "react";
+import FormLable from "./FormLable";
 import InputError from "../InputError";
 import TextArea from "./Textarea.tsx";
+import { cn } from "../../util/cn.ts";
 
-let FormTextarea = ({ label, placeholder, error, ...inputProps }) => {
+let FormTextarea = ({
+  className,
+  inputClassName,
+  label,
+  placeholder,
+  error,
+  ...inputProps
+}) => {
   let id = useId();
 
   return (
-    <section className="flex flex-col gap-2">
-      <label htmlFor={id} className="ml-2 select-none text-lg text-text">
-        {label}
-      </label>
+    <section className={cn("flex flex-col gap-2", className)}>
+      <FormLable id={id}>{label}</FormLable>
       <TextArea
+        className={inputClassName}
         varient="outlined"
         id={id}
         placeholder={placeholder}
