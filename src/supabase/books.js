@@ -1,9 +1,25 @@
 import { supabase } from "./client";
+import { BOOK_IMAGES } from "../config/constants";
+import { getUserByUsername } from "./shared";
+import { uploadBookImage } from "./storage";
 
 export async function getBooks() {
   const { data, error } = await supabase.from("books").select("*");
   if (error) throw error;
   return data;
+}
+
+export async function getUserBooks(username) {
+  const { id: userId } = await getUserByUsername(username);
+
+  const { data, error } = await supabase
+    .from("books")
+    .select("*")
+    .eq("user_id", userId);
+
+  if (error) throw error;
+
+  return { success: true, data, error: null };
 }
 
 export async function getBookDetails(bookId) {
@@ -28,19 +44,29 @@ export async function getBookDetails(bookId) {
 }
 
 export async function addBook(
-  userId,
+  username,
   title,
   description,
   price,
-  imageUrl,
+  image,
   genres,
 ) {
+  let imageUrl = null;
+  if (image) {
+    const {
+      data: { path },
+    } = await uploadBookImage(image, `${username}-${title}`);
+    imageUrl = path;
+  }
+
+  const { id: userId } = await getUserByUsername(username);
+
   const { data, error } = await supabase.rpc("add_book_with_genres", {
     p_user_id: userId,
     p_title: title,
     p_description: description,
     p_price: price,
-    p_image_url: imageUrl || null,
+    p_image_url: image ? BOOK_IMAGES + imageUrl : null,
     p_genre_names: genres,
   });
 

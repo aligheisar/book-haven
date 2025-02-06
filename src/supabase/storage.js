@@ -3,9 +3,13 @@ import { supabase } from "./client";
 export async function uploadBookImage(file, fileName) {
   const { data, error } = await supabase.storage
     .from("book-images")
-    .upload(fileName, file);
+    .upload(fileName, file, {
+      upsert: true,
+    });
+
   if (error) throw error;
-  return data;
+
+  return { success: true, data, error: null };
 }
 
 export async function uploadAvatarImage(file, fileName) {
@@ -13,7 +17,6 @@ export async function uploadAvatarImage(file, fileName) {
     .from("avatar-images")
     .update(fileName, file, {
       upsert: true,
-      cacheControl: "0",
     });
   if (error) throw error;
   return data;
