@@ -10,7 +10,7 @@ import { GetNetwork } from "./NetworkContext";
 import { changeUserInformation } from "../supabase/user";
 import { GetNotifi } from "./NotifiContext";
 import { formatError } from "../util/format";
-import { getUserBooks } from "../supabase/books";
+import { getBooksByUsername } from "../supabase/books";
 
 let UserContext = createContext();
 
@@ -47,15 +47,16 @@ let UserProvider = ({ children }) => {
 
   let fetchUserBooks = useCallback(async () => {
     try {
-      let response = await getUserBooks(user.username);
+      let response = await getBooksByUsername(user.username);
 
       setUserBooks(
         response.data.map((i) => ({
           id: i.id,
           title: i.title,
-          description: i.description,
           price: i.price,
           imageUrl: i.image_url,
+          fullName: i.full_name,
+          username: i.username,
         })),
       );
     } catch (error) {
