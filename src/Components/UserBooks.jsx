@@ -13,7 +13,14 @@ let UserBooks = () => {
   return (
     <HorizontalSection>
       {userBooks.map((i) => (
-        <BookCard key={i.id} title={i.title} image={i.imageUrl} />
+        <BookCard
+          key={i.id}
+          title={i.title}
+          price={i.price}
+          image={i.imageUrl}
+          fullName={i.fullName}
+          username={i.username}
+        />
       ))}
     </HorizontalSection>
   );
