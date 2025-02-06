@@ -16,3 +16,9 @@ export let registerSchema = z.object({
 });
 
 export let emailSchema = z.string().email();
+
+export let newBookSchema = z.object({
+  title: z.string().min(1),
+  description: z.string(),
+  price: z.number().min(0.1),
+});
