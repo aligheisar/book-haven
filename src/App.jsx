@@ -5,8 +5,10 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashbord from "./pages/Dashbord";
+import Users from "./pages/Users";
+import UserProfile from "./pages/UserProfile";
 import NewBook from "./pages/NewBook";
-import NewBookProvider from "./Context/NewBookContex";
+import NewBookProvider from "./Context/NewBookContext";
 
 let App = () => {
   return (
@@ -16,6 +18,8 @@ let App = () => {
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="dashbord" element={<Dashbord />} />
+        <Route path="users" element={<Users />} />
+        <Route path="users/:username" element={<UserProfile />} />
         <Route
           path="new-book"
           element={
