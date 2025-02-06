@@ -10,7 +10,7 @@ let FormBookImage = ({ url, handleFileChange }) => {
   };
 
   return (
-    <BookCoverContainer onClick={openImagePicker}>
+    <BookCoverContainer className="h-80" onClick={openImagePicker}>
       <input
         ref={fileInput}
         onChange={handleFileChange}
