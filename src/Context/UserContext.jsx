@@ -10,6 +10,7 @@ import { GetNetwork } from "./NetworkContext";
 import { changeUserInformation } from "../supabase/user";
 import { GetNotifi } from "./NotifiContext";
 import { formatError } from "../util/format";
+import { getUserBooks } from "../supabase/books";
 
 let UserContext = createContext();
 
@@ -20,6 +21,7 @@ let UserProvider = ({ children }) => {
   const { addNotif } = GetNotifi();
 
   const [user, setUser] = useState(null);
+  const [userBooks, setUserBooks] = useState([]);
   const [loading, setLoading] = useState(true);
 
   let initializeUser = useCallback(async () => {
@@ -42,6 +44,28 @@ let UserProvider = ({ children }) => {
   useEffect(() => {
     if (!user) initializeUser();
   }, [initializeUser, user]);
+
+  let fetchUserBooks = useCallback(async () => {
+    try {
+      let response = await getUserBooks(user.username);
+
+      setUserBooks(
+        response.data.map((i) => ({
+          id: i.id,
+          title: i.title,
+          description: i.description,
+          price: i.price,
+          imageUrl: i.image_url,
+        })),
+      );
+    } catch (error) {
+      addNotif({
+        type: "warning",
+        title: "can't load",
+        desc: "we can't load user books",
+      });
+    }
+  }, [user?.username, addNotif]);
 
   let changeAvatar = async (file, fileName) => {
     try {
@@ -97,7 +121,9 @@ let UserProvider = ({ children }) => {
 
   let value = {
     user,
+    userBooks,
     setUser,
+    fetchUserBooks,
     loading,
     setLoading,
     changeAvatar,

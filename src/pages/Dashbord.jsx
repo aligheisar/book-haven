@@ -4,6 +4,7 @@ import SectionTitle from "../Components/SectionTitle";
 import Button from "../Components/ui/Button.tsx";
 import { Add } from "../Components/ui/Icons";
 import { Link } from "react-router-dom";
+import UserBooks from "../Components/UserBooks";
 
 let Dashbord = () => {
   return (
@@ -21,6 +22,7 @@ let Dashbord = () => {
             </Button>
           </Link>
         </div>
+        <UserBooks />
       </DashbordSection>
     </section>
   );
