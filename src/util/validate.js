@@ -24,3 +24,11 @@ export let validateInputs = (name, value) => {
   }
   return null;
 };
+
+export let validateNewBookInputs = (name, value) => {
+  if (value.length === 0) return null;
+  if (name === "price") {
+    if (parseFloat(value) <= 0) return "Price can't be 0 or negative";
+  }
+  return null;
+};
