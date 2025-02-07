@@ -9,38 +9,57 @@ export async function getBooks() {
   return data;
 }
 
-export async function getUserBooks(username) {
-  const { id: userId } = await getUserByUsername(username);
+export async function getBooksByUsername(username) {
+  let user = await getUserByUsername(username);
 
   const { data, error } = await supabase
     .from("books")
-    .select("*")
-    .eq("user_id", userId);
+    .select("id, title, price, image_url")
+    .eq("user_id", user.id);
 
   if (error) throw error;
 
-  return { success: true, data, error: null };
+  return {
+    success: true,
+    data: data.map((i) => ({
+      id: i.id,
+      title: i.title,
+      price: i.price,
+      image_url: i.image_url,
+      full_name: user.full_name,
+      username: user.username,
+    })),
+    error: null,
+  };
 }
 
-export async function getBookDetails(bookId) {
+export async function getBookDetails(username, title) {
+  let user = await getUserByUsername(username);
+
+  if (!user) {
+    return { success: false, data: null, error: "User not found" };
+  }
+
   const { data, error } = await supabase
     .from("books")
     .select(
       `
-            *,
-            comments (
-                comment, created_at, user_id
-            ),
-            likes (
-                user_id
-            )
-        `,
+        id, title, description, price, image_url, user_id,
+        comments (
+            content, created_at, user_id
+        ),
+        likes (
+            user_id
+        )
+      `,
     )
-    .eq("id", bookId)
-    .single();
+    .eq("user_id", user.id)
+    .ilike("title", title)
+    .maybeSingle();
 
-  if (error) throw error;
-  return data;
+  if (error) return { success: false, data: null, error };
+
+  return { success: true, data, error: null };
 }
 
 export async function addBook(
