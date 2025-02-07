@@ -4,6 +4,7 @@ import { GetUser } from "./UserContext";
 import { validateNewBookInputs } from "../util/validate";
 import { newBookSchema } from "../config/schema";
 import { GetNotifi } from "./NotifiContext";
+import { formatError } from "../util/format";
 
 let NewBookContext = createContext();
 
@@ -65,14 +66,21 @@ let NewBookProvider = ({ children }) => {
 
     let { title, description, price } = response.data;
 
-    await addBook(
-      user.username,
-      title,
-      description,
-      price,
-      imageFile,
-      selectedGenres,
-    );
+    try {
+      await addBook(
+        user.username,
+        title,
+        description,
+        price,
+        imageFile,
+        selectedGenres,
+      );
+    } catch (error) {
+      addNotif({
+        type: "danger",
+        ...formatError(error),
+      });
+    }
   };
 
   let handleFormChange = (e) => {
