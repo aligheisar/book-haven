@@ -70,6 +70,26 @@ export async function addBook(
   image,
   genres,
 ) {
+  const { id: userId } = await getUserByUsername(username);
+
+  const { data: checkExistData, error: checkExistError } = await supabase
+    .from("books")
+    .select("id")
+    .eq("user_id", userId)
+    .eq("title", title)
+    .maybeSingle();
+
+  if (checkExistError) throw checkExistError;
+
+  if (checkExistData) {
+    let errorObj = {
+      status: "Faild to add Book",
+      message: "this Book is Already exist",
+    };
+
+    throw errorObj;
+  }
+
   let imageUrl = null;
   if (image) {
     const {
@@ -77,8 +97,6 @@ export async function addBook(
     } = await uploadBookImage(image, `${username}-${title}`);
     imageUrl = path;
   }
-
-  const { id: userId } = await getUserByUsername(username);
 
   const { data, error } = await supabase.rpc("add_book_with_genres", {
     p_user_id: userId,
