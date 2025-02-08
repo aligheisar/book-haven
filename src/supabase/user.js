@@ -15,28 +15,81 @@ export async function getUserProfile(userId) {
   return data;
 }
 
-export async function checkIfFollowing(userUsername, targetUsername) {
-  let {
-    users: [firstUser, secondUser],
-  } = getUsersByUsername(userUsername, targetUsername);
-
+export async function isFollow(firstUserId, secondUserId) {
   const { data, error } = await supabase
     .from("followers")
     .select("*")
-    .eq("follower_id", firstUser.id)
-    .eq("following_id", secondUser.id)
+    .eq("follower_id", firstUserId)
+    .eq("following_id", secondUserId)
     .maybeSingle();
 
   if (error) throw error;
+
+  return !!data;
+}
+
+export async function follow(firstUserId, secondUserId) {
+  let { data, error } = await supabase
+    .from("followers")
+    .insert({ follower_id: firstUserId, following_id: secondUserId });
+
+  if (error) throw error;
+
+  console.log(data);
+
+  return { success: true };
+}
+
+export async function unFollow(firstUserId, secondUserId) {
+  let { data, error } = await supabase
+    .from("followers")
+    .delete()
+    .eq("follower_id", firstUserId)
+    .eq("following_id", secondUserId);
+
+  if (error) throw error;
+  console.log(data);
+
+  return { success: true, data };
+}
+
+export async function checkIfFollowing(userUsername, targetUsername) {
+  let {
+    users: [firstUser, secondUser],
+  } = await getUsersByUsername(userUsername, targetUsername);
+
+  let isFollows = await isFollow(firstUser.id, secondUser.id);
 
   return {
     success: true,
     data: {
       fullName: secondUser.full_name,
       avatarUrl: secondUser.avatar_url,
-      isFollow: !!data,
+      isFollow: !!isFollows,
     },
   };
+}
+
+export async function toggleFollowUser(userUsername, targetUsername) {
+  let {
+    users: [firstUser, secondUser],
+  } = await getUsersByUsername(userUsername, targetUsername);
+
+  let isFollows = await isFollow(firstUser.id, secondUser.id);
+
+  if (isFollows) {
+    let unFollowRes = await unFollow(firstUser.id, secondUser.id);
+
+    if (unFollowRes.success) {
+      return { success: true };
+    }
+  } else {
+    let followRes = await follow(firstUser.id, secondUser.id);
+
+    if (followRes.success) {
+      return { success: true };
+    }
+  }
 }
 
 async function changeFullName(username, value) {
