@@ -18,7 +18,7 @@ let BookDetails = () => {
     <section className="flex flex-col">
       <header className="mx-auto flex h-96 w-fit gap-7 py-7">
         <BookImage url={data.imageUrl} />
-        <div className="flex max-w-56 flex-col gap-6 py-3">
+        <div className="flex max-w-72 flex-col gap-5 py-3">
           <div className="flex flex-col gap-3">
             <Title>{data.title}</Title>
             <Description>{data.description || "No description"}</Description>
