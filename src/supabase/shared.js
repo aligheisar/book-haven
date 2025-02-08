@@ -19,6 +19,24 @@ export async function getUserByUsername(username) {
   return data[0];
 }
 
+export async function getUsersByUsername(firstUsername, secondUsername) {
+  const [firstUser, secondUser] = await Promise.all([
+    getUserByUsername(firstUsername),
+    getUserByUsername(secondUsername),
+  ]);
+
+  if (!firstUsername || !secondUsername) {
+    let errorObj = {
+      status: "user not found",
+      message: "we can't find the user in db",
+    };
+
+    throw errorObj;
+  }
+
+  return { success: true, users: [firstUser, secondUser] };
+}
+
 export async function isUsernameUnique(username) {
   let response = await getUserByUsername(username);
   if (response) return false;
