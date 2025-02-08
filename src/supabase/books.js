@@ -9,6 +9,19 @@ export async function getBooks() {
   return data;
 }
 
+export async function getBookByTitle(userId, title) {
+  const { data, error } = await supabase
+    .from("books")
+    .select("*")
+    .ilike("title", title)
+    .eq("user_id", userId)
+    .maybeSingle();
+
+  if (error) throw error;
+
+  return { success: true, data };
+}
+
 export async function getBooksByUsername(username) {
   let user = await getUserByUsername(username);
 
