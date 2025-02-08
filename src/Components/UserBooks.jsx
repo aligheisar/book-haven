@@ -4,11 +4,11 @@ import HorizontalSection from "./ui/HorizontalSection";
 import BookCard from "./BookCard";
 
 let UserBooks = () => {
-  let { userBooks, fetchUserBooks } = GetUser();
+  let { user, userBooks, fetchUserBooks } = GetUser();
 
   useEffect(() => {
     fetchUserBooks();
-  }, [fetchUserBooks]);
+  }, [fetchUserBooks, user]);
 
   return (
     <HorizontalSection>
