@@ -59,7 +59,7 @@ let useFollowUser = (username) => {
     toggleFollow,
   };
 
-  return [targetUser, loading, subLoading, actions];
+  return [targetUser, user, loading, subLoading, actions];
 };
 
 export default useFollowUser;
