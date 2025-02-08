@@ -1,5 +1,5 @@
 import DashbordSection from "../Components/DashbordSection";
-import UserInformation from "../Components/UserInformation";
+import AccountInformation from "../Components/AccountInformation.jsx";
 import SectionTitle from "../Components/SectionTitle";
 import Button from "../Components/ui/Button.tsx";
 import { Add } from "../Components/ui/Icons";
@@ -11,7 +11,7 @@ let Dashbord = () => {
     <section className="flex h-full w-full items-start justify-center gap-4 pt-6">
       <DashbordSection>
         <SectionTitle>Account Information</SectionTitle>
-        <UserInformation />
+        <AccountInformation />
       </DashbordSection>
       <DashbordSection className="max-w-none flex-1">
         <div className="flex items-center justify-between">

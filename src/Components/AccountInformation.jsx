@@ -4,7 +4,7 @@ import DashbordAvatar from "./DashbordAvatar";
 import EditableText from "./EditableText";
 import NonEditableText from "./NonEditableText";
 
-let UserInformation = () => {
+let AccountInformation = () => {
   let { user, changeFullName } = GetUser();
 
   let fullNameValidator = (value) => {
@@ -24,4 +24,4 @@ let UserInformation = () => {
     </section>
   );
 };
-export default UserInformation;
+export default AccountInformation;
