@@ -1,4 +1,5 @@
 import { supabase } from "./client";
+import { userNotFoundError } from "./errorObj";
 
 export async function getUserById(id) {
   const { data, error } = await supabase.from("users").select("*").eq("id", id);
@@ -26,12 +27,7 @@ export async function getUsersByUsername(firstUsername, secondUsername) {
   ]);
 
   if (!firstUsername || !secondUsername) {
-    let errorObj = {
-      status: "user not found",
-      message: "we can't find the user in db",
-    };
-
-    throw errorObj;
+    throw userNotFoundError;
   }
 
   return { success: true, users: [firstUser, secondUser] };
