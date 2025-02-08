@@ -5,6 +5,7 @@ import { validateNewBookInputs } from "../util/validate";
 import { newBookSchema } from "../config/schema";
 import { GetNotifi } from "./NotifiContext";
 import { formatError } from "../util/format";
+import { useNavigate } from "react-router-dom";
 
 let NewBookContext = createContext();
 
@@ -13,6 +14,8 @@ export let GetNewBook = () => useContext(NewBookContext);
 let NewBookProvider = ({ children }) => {
   let { user } = GetUser();
   let { addNotif } = GetNotifi();
+
+  let navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     title: { value: "", error: null },
@@ -23,6 +26,7 @@ let NewBookProvider = ({ children }) => {
   const [imageFile, setImageFile] = useState(null);
   const [genres, setGenres] = useState([]);
   const [loadingGenres, setLoadingGenres] = useState(true);
+  const [uploading, setUploading] = useState(false);
   const [showGenres, setShowGenres] = useState(false);
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [genreInput, setGenreInput] = useState("");
@@ -67,7 +71,8 @@ let NewBookProvider = ({ children }) => {
     let { title, description, price } = response.data;
 
     try {
-      await addBook(
+      setUploading(true);
+      let response = await addBook(
         user.username,
         title,
         description,
@@ -75,11 +80,23 @@ let NewBookProvider = ({ children }) => {
         imageFile,
         selectedGenres,
       );
+
+      if (response.success) {
+        addNotif({
+          type: "success",
+          title: "Book Added",
+          desc: "your new book was added successfuly",
+        });
+
+        navigate(`/users/${user.username}/${title}`);
+      }
     } catch (error) {
       addNotif({
         type: "danger",
         ...formatError(error),
       });
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -136,6 +153,7 @@ let NewBookProvider = ({ children }) => {
   let value = {
     formData,
     image,
+    uploading,
     filteredGenres,
     loadingGenres,
     selectedGenres,

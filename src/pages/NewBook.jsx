@@ -4,6 +4,7 @@ import Button from "../Components/ui/Button.tsx";
 import FormInput from "../Components/ui/FormInput";
 import FormTextarea from "../Components/ui/FormTextarea";
 import FormBookImage from "../Components/ui/FormBookImage";
+import Uploading from "../Components/Uploading";
 import { GetNewBook } from "../Context/NewBookContext";
 
 let NewBook = () => {
@@ -13,10 +14,12 @@ let NewBook = () => {
     handleFormChange,
     handleFormSubmit,
     image,
+    uploading,
   } = GetNewBook();
 
   return (
     <section className="flex h-full w-full items-center justify-center">
+      {uploading && <Uploading />}
       <section className="flex w-full max-w-[720px] flex-col gap-4 rounded-xl bg-surface px-3 py-4">
         <SectionTitle>New Book</SectionTitle>
         <form onSubmit={handleFormSubmit} className="flex flex-col gap-4">
@@ -57,7 +60,7 @@ let NewBook = () => {
               </div>
             </div>
           </div>
-          <Button varient="dim" className="rounded-md">
+          <Button disabled={uploading} varient="dim" className="rounded-md">
             Submit
           </Button>
         </form>
