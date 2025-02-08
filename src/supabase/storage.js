@@ -9,7 +9,7 @@ export async function uploadBookImage(file, fileName) {
 
   if (error) throw error;
 
-  return { success: true, data, error: null };
+  return { success: true, data };
 }
 
 export async function uploadAvatarImage(file, fileName) {

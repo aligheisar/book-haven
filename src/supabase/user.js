@@ -63,7 +63,7 @@ async function changeAvatar(username, fileData) {
   if (error) throw error;
 
   let { avatar_url } = await getUserByUsername(username);
-  return { success: true, avatar_url, error: null };
+  return { success: true, avatar_url };
 }
 
 export async function changeUserInformation(username, colName, value) {
