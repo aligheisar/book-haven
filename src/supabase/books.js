@@ -29,7 +29,6 @@ export async function getBooksByUsername(username) {
       full_name: user.full_name,
       username: user.username,
     })),
-    error: null,
   };
 }
 
@@ -57,9 +56,9 @@ export async function getBookDetails(username, title) {
     .ilike("title", title)
     .maybeSingle();
 
-  if (error) return { success: false, data: null, error };
+  if (error) throw error;
 
-  return { success: true, data, error: null };
+  return { success: true, data };
 }
 
 export async function addBook(
@@ -109,7 +108,7 @@ export async function addBook(
 
   if (error) throw error;
 
-  return { success: true, data, error: null };
+  return { success: true, data };
 }
 
 export async function getGenres() {
@@ -117,5 +116,5 @@ export async function getGenres() {
 
   if (error) throw error;
 
-  return { success: true, data: data.map((i) => i.name), error: null };
+  return { success: true, data: data.map((i) => i.name) };
 }

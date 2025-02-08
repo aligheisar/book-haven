@@ -9,10 +9,9 @@ async function insertUser(id, username, fullName, email) {
     email,
   });
 
-  if (error) {
-    return { success: false, error };
-  }
-  return { success: true, error: null };
+  if (error) throw error;
+
+  return { success: true };
 }
 
 export async function register(email, password, username, fullName) {
