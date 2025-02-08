@@ -2,6 +2,9 @@ import { useParams } from "react-router-dom";
 import Loading from "../Components/Loading";
 import useBookDetails from "../hooks/use-book-details";
 import BookImage from "../Components/BookImage";
+import Title from "../Components/ui/Title";
+import Description from "../Components/ui/Description";
+import UserInfo from "../Components/UserInfo";
 
 let BookDetails = () => {
   let { username, book } = useParams();
@@ -13,17 +16,15 @@ let BookDetails = () => {
 
   return (
     <section className="flex flex-col">
-      <header className="flex h-96 gap-7 py-7">
+      <header className="mx-auto flex h-96 w-fit gap-7 py-7">
         <BookImage url={data.imageUrl} />
-        <div className="flex flex-col gap-6 py-3">
+        <div className="flex max-w-56 flex-col gap-6 py-3">
           <div className="flex flex-col gap-3">
-            <h1 className="font-serif text-5xl text-primary">{data.title}</h1>
-            <p className="custom-scroll-light max-h-16 overflow-y-auto text-text opacity-80">
-              {data.description || "no description"}
-            </p>
+            <Title>{data.title}</Title>
+            <Description>{data.description || "No description"}</Description>
           </div>
           <div className="flex flex-col gap-3">
-            <section>author data</section>
+            <UserInfo username={username} />
             <section>likes and comments</section>
           </div>
         </div>
