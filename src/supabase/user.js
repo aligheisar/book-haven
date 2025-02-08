@@ -2,7 +2,7 @@ import { AVATAR_IMAGES } from "../config/constants";
 import { supabase } from "./client";
 import { uploadAvatarImage } from "./storage";
 import { validateInputs } from "../util/validate";
-import { getUserByUsername } from "./shared";
+import { getUserByUsername, getUsersByUsername } from "./shared";
 
 ///!!!!!!
 export async function getUserProfile(userId) {
@@ -15,15 +15,28 @@ export async function getUserProfile(userId) {
   return data;
 }
 
-export async function checkIfFollowing(followerId, followingId) {
+export async function checkIfFollowing(userUsername, targetUsername) {
+  let {
+    users: [firstUser, secondUser],
+  } = getUsersByUsername(userUsername, targetUsername);
+
   const { data, error } = await supabase
-    .from("follows")
+    .from("followers")
     .select("*")
-    .eq("follower_id", followerId)
-    .eq("following_id", followingId);
+    .eq("follower_id", firstUser.id)
+    .eq("following_id", secondUser.id)
+    .maybeSingle();
 
   if (error) throw error;
-  return data.length > 0;
+
+  return {
+    success: true,
+    data: {
+      fullName: secondUser.full_name,
+      avatarUrl: secondUser.avatar_url,
+      isFollow: !!data,
+    },
+  };
 }
 
 async function changeFullName(username, value) {
