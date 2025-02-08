@@ -1,7 +1,9 @@
+import Title from "../Components/ui/Title";
+
 let NoInternet = () => {
   return (
     <main className="grid h-full w-full -translate-y-12 place-content-center gap-4 text-center">
-      <h1 className="font-serif text-5xl text-primary">No Internet</h1>
+      <Title>No Internet</Title>
       <p className="text-lg text-secondary-text opacity-80">
         please check your internet Connection
       </p>
