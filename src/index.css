@@ -47,17 +47,17 @@
 .custom-scroll-light::-webkit-scrollbar {
   border-radius: 999px;
   width: 8px;
-  background: rgb(var(--surface) / .6);
+  background: rgb(var(--surface) / 0.6);
 }
 
 .custom-scroll::-webkit-scrollbar-thumb {
   border-radius: 999px;
-  background: rgb(var(--background) / .6);
+  background: rgb(var(--background) / 0.6);
 }
 
 .custom-scroll-light::-webkit-scrollbar-thumb {
   border-radius: 999px;
-  background: rgb(var(--secondary-surface) / .6);
+  background: rgb(var(--secondary-surface) / 0.6);
 }
 
 .notif-item:before {
@@ -80,7 +80,7 @@
 .backdrop {
   opacity: 0;
 
-  &>section {
+  & > section {
     translate: 0 -20px;
     opacity: 1;
   }
@@ -89,7 +89,7 @@
 .backdrop.active {
   opacity: 1;
 
-  &>section {
+  & > section {
     translate: 0 0;
     opacity: 1;
   }
