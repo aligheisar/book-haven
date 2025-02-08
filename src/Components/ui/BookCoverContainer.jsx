@@ -4,7 +4,7 @@ let BookCoverContainer = ({ children, className, ...props }) => {
   return (
     <section
       className={cn(
-        "aspect-[1/1.4] h-full shrink-0 cursor-pointer overflow-hidden rounded",
+        "aspect-[1/1.4] h-full shrink-0 cursor-pointer overflow-hidden rounded shadow-xl",
         className,
       )}
       {...props}
