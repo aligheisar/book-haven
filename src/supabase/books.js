@@ -4,6 +4,7 @@ import { getUserByUsername } from "./shared";
 import { uploadBookImage } from "./storage";
 import { isLiked } from "./likes";
 import { isFollow } from "./user";
+import { userNotFoundError } from "./errorObj";
 
 export async function getBooks() {
   const { data, error } = await supabase.from("books").select("*");
@@ -50,9 +51,7 @@ export async function getBooksByUsername(username) {
 export async function getBookDetails(username, title) {
   let user = await getUserByUsername(username);
 
-  if (!user) {
-    return { success: false, data: null, error: "User not found" };
-  }
+  if (!user) throw userNotFoundError;
 
   const { data, error } = await supabase
     .from("books")
