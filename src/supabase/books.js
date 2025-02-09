@@ -2,6 +2,8 @@ import { supabase } from "./client";
 import { BOOK_IMAGES } from "../config/constants";
 import { getUserByUsername } from "./shared";
 import { uploadBookImage } from "./storage";
+import { isLiked } from "./likes";
+import { isFollow } from "./user";
 
 export async function getBooks() {
   const { data, error } = await supabase.from("books").select("*");
@@ -58,11 +60,10 @@ export async function getBookDetails(username, title) {
       `
         id, title, description, price, image_url, user_id,
         comments (
-            content, created_at, user_id
+            id, content, created_at,
+            user:users ( username, full_name, avatar_url )
         ),
-        likes (
-            user_id
-        )
+        likes ( user_id )
       `,
     )
     .eq("user_id", user.id)
@@ -71,7 +72,28 @@ export async function getBookDetails(username, title) {
 
   if (error) throw error;
 
-  return { success: true, data };
+  delete data["user_id"];
+
+  let isUserLiked = false;
+  isUserLiked = await isLiked(data.id);
+
+  let isUserFollow = false;
+  isUserFollow = await isFollow(user.id);
+
+  let newData = {
+    ...data,
+    likes: data.likes.length,
+    isUserLiked,
+    isUserFollow,
+    user: {
+      id: user.id,
+      full_name: user.full_name,
+      username: user.username,
+      avatar_url: user.avatar_url,
+    },
+  };
+
+  return { success: true, data: newData };
 }
 
 export async function addBook(

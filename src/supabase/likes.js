@@ -1,13 +1,14 @@
 import { getBookByTitle } from "./books";
 import { supabase } from "./client";
-import { bookNotFoundError } from "./errorObj";
-import { getUserByUsername, getUsersByUsername } from "./shared";
+import { bookNotFoundError, somethingHappend } from "./errorObj";
+import { getUserByUsername } from "./shared";
+import { currentUser } from "./user";
 
-export async function isLiked(userId, bookId) {
+export async function isLiked(bookId) {
   const { data, error } = await supabase
     .from("likes")
     .select("user_id, book_id")
-    .eq("user_id", userId)
+    .eq("user_id", currentUser.id)
     .eq("book_id", bookId)
     .maybeSingle();
 
@@ -16,19 +17,19 @@ export async function isLiked(userId, bookId) {
   return data ? true : false;
 }
 
-export async function isLikedByUsername(username, bookTitle) {
-  let user = await getUserByUsername(username);
+// export async function isLikedByUsername(username, bookTitle) {
+//   let user = await getUserByUsername(username);
 
-  let { data: book } = await getBookByTitle(user.id, bookTitle);
+//   let { data: book } = await getBookByTitle(user.id, bookTitle);
 
-  if (!book) throw bookNotFoundError;
+//   if (!book) throw bookNotFoundError;
 
-  return await isLiked(user.id, book.id);
-}
+//   return await isLiked(user.id, book.id);
+// }
 
-async function likeBook(userId, bookId) {
+async function likeBook(bookId) {
   const { error } = await supabase.from("likes").insert({
-    user_id: userId,
+    user_id: currentUser.id,
     book_id: bookId,
   });
 
@@ -37,11 +38,11 @@ async function likeBook(userId, bookId) {
   return { success: true };
 }
 
-async function unLikeBook(userId, bookId) {
+async function unLikeBook(bookId) {
   const { error } = await supabase
     .from("likes")
     .delete()
-    .eq("user_id", userId)
+    .eq("user_id", currentUser.id)
     .eq("book_id", bookId);
 
   if (error) throw error;
@@ -49,28 +50,28 @@ async function unLikeBook(userId, bookId) {
   return { success: true };
 }
 
-export async function toggleLike(username, targetUrername, bookTitle) {
-  let {
-    users: [firstUser, secondUser],
-  } = await getUsersByUsername(username, targetUrername);
+export async function toggleLike(username, bookTitle) {
+  let user = await getUserByUsername(username);
 
-  let { data: book } = await getBookByTitle(secondUser.id, bookTitle);
+  let { data: book } = await getBookByTitle(user.id, bookTitle);
 
   if (!book) throw bookNotFoundError;
 
-  let isLikedFlag = await isLiked(firstUser.id, book.id);
+  let isLikedFlag = await isLiked(book.id);
 
   if (isLikedFlag) {
-    let { success } = await unLikeBook(firstUser.id, book.id);
+    let { success } = await unLikeBook(book.id);
     if (success) {
       return { result: false };
     }
   } else {
-    let { success } = await likeBook(firstUser.id, book.id);
+    let { success } = await likeBook(book.id);
     if (success) {
       return { result: true };
     }
   }
+
+  throw somethingHappend;
 }
 
 export async function getBookLikes(bookId) {

@@ -7,3 +7,8 @@ export const bookNotFoundError = {
   status: "Book not Found",
   message: "we can't find the book",
 };
+
+export const somethingHappend = {
+  status: "Something Happends",
+  message: "some error happends",
+};

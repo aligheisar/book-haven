@@ -2,7 +2,11 @@ import { AVATAR_IMAGES } from "../config/constants";
 import { supabase } from "./client";
 import { uploadAvatarImage } from "./storage";
 import { validateInputs } from "../util/validate";
-import { getUserByUsername, getUsersByUsername } from "./shared";
+import { getUserByUsername } from "./shared";
+
+export const {
+  data: { user: currentUser },
+} = await supabase.auth.getUser();
 
 ///!!!!!!
 export async function getUserProfile(userId) {
@@ -15,12 +19,12 @@ export async function getUserProfile(userId) {
   return data;
 }
 
-export async function isFollow(firstUserId, secondUserId) {
+export async function isFollow(userId) {
   const { data, error } = await supabase
     .from("followers")
     .select("*")
-    .eq("follower_id", firstUserId)
-    .eq("following_id", secondUserId)
+    .eq("follower_id", currentUser.id)
+    .eq("following_id", userId)
     .maybeSingle();
 
   if (error) throw error;
@@ -28,63 +32,56 @@ export async function isFollow(firstUserId, secondUserId) {
   return !!data;
 }
 
-export async function follow(firstUserId, secondUserId) {
-  let { data, error } = await supabase
+export async function follow(userId) {
+  let { error } = await supabase
     .from("followers")
-    .insert({ follower_id: firstUserId, following_id: secondUserId });
+    .insert({ follower_id: currentUser.id, following_id: userId });
 
   if (error) throw error;
-
-  console.log(data);
 
   return { success: true };
 }
 
-export async function unFollow(firstUserId, secondUserId) {
-  let { data, error } = await supabase
+export async function unFollow(userId) {
+  let { error } = await supabase
     .from("followers")
     .delete()
-    .eq("follower_id", firstUserId)
-    .eq("following_id", secondUserId);
+    .eq("follower_id", currentUser.id)
+    .eq("following_id", userId);
 
   if (error) throw error;
-  console.log(data);
 
-  return { success: true, data };
+  return { success: true };
 }
 
-export async function checkIfFollowing(userUsername, targetUsername) {
-  let {
-    users: [firstUser, secondUser],
-  } = await getUsersByUsername(userUsername, targetUsername);
+// export async function checkIfFollowing(username) {
+//   let user = await getUserByUsername(username);
 
-  let isFollows = await isFollow(firstUser.id, secondUser.id);
+//   let isFollows = await isFollow(user.id);
 
-  return {
-    success: true,
-    data: {
-      fullName: secondUser.full_name,
-      avatarUrl: secondUser.avatar_url,
-      isFollow: !!isFollows,
-    },
-  };
-}
+//   return {
+//     success: true,
+//     data: {
+//       fullName: user.full_name,
+//       avatarUrl: user.avatar_url,
+//       isFollow: !!isFollows,
+//     },
+//   };
+// }
 
-export async function toggleFollowUser(userUsername, targetUsername) {
-  let {
-    users: [firstUser, secondUser],
-  } = await getUsersByUsername(userUsername, targetUsername);
+export async function toggleFollow(username) {
+  let user = await getUserByUsername(username);
 
-  let isFollows = await isFollow(firstUser.id, secondUser.id);
+  let isFollows = await isFollow(user.id);
 
   if (isFollows) {
-    let unFollowRes = await unFollow(firstUser.id, secondUser.id);
+    let unFollowRes = await unFollow(user.id);
 
     if (unFollowRes.success) {
       return { success: true };
     }
   } else {
-    let followRes = await follow(firstUser.id, secondUser.id);
+    let followRes = await follow(user.id);
 
     if (followRes.success) {
       return { success: true };
