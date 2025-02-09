@@ -1,5 +1,5 @@
 import DashbordSection from "../Components/DashbordSection";
-import AccountInformation from "../Components/AccountInformation.jsx";
+import AccountInformation from "../Components/AccountInformation";
 import SectionTitle from "../Components/SectionTitle";
 import Button from "../Components/ui/Button.tsx";
 import { Add } from "../Components/ui/Icons";
