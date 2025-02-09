@@ -1,6 +1,5 @@
-import { useParams } from "react-router-dom";
 import Loading from "../Components/Loading";
-import useBookDetails from "../hooks/use-book-details";
+import { GetBookDetails } from "../Context/BookDetailsContext";
 import BookImage from "../Components/BookImage";
 import Title from "../Components/ui/Title";
 import Description from "../Components/ui/Description";
@@ -10,11 +9,9 @@ import BookState from "../Components/BookState";
 import BookNotFound from "./BookNotFound";
 
 let BookDetails = () => {
-  let { username, book } = useParams();
+  let { data, error, pageLoading } = GetBookDetails();
 
-  let [data, error, loading] = useBookDetails(username, book);
-
-  if (loading) return <Loading />;
+  if (pageLoading) return <Loading />;
   if (error) return <BookNotFound />;
 
   return (
@@ -28,13 +25,8 @@ let BookDetails = () => {
             <Price>{data.price}</Price>
           </div>
           <div className="flex flex-col gap-3">
-            <UserInfo username={username} />
-            <BookState
-              comments={data.comments}
-              likes={data.likes}
-              username={username}
-              book={book}
-            />
+            <UserInfo />
+            <BookState />
           </div>
         </div>
       </header>
