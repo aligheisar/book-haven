@@ -10,6 +10,7 @@ import UserProfile from "./pages/UserProfile";
 import NewBook from "./pages/NewBook";
 import NewBookProvider from "./Context/NewBookContext";
 import BookDetails from "./pages/BookDetails";
+import BookDetailsProvider from "./Context/BookDetailsContext";
 
 let App = () => {
   return (
@@ -21,7 +22,14 @@ let App = () => {
         <Route path="dashbord" element={<Dashbord />} />
         <Route path="users" element={<Users />} />
         <Route path="users/:username" element={<UserProfile />} />
-        <Route path="users/:username/:book" element={<BookDetails />} />
+        <Route
+          path="users/:username/:book"
+          element={
+            <BookDetailsProvider>
+              <BookDetails />
+            </BookDetailsProvider>
+          }
+        />
         <Route
           path="new-book"
           element={
