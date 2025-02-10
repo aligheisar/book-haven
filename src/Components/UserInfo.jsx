@@ -20,7 +20,7 @@ let UserInfo = () => {
           <h3 className="w-fit text-nowrap">{data.user.fullName}</h3>
         </div>
       </Link>
-      {user.username !== data.user.username && (
+      {user?.username !== data.user.username && (
         <Button
           onClick={toggleFollow}
           varient="outlined"
