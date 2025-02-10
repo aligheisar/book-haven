@@ -1,10 +1,10 @@
-import DashboardSection from "../Components/DashboardSection";
-import AccountInformation from "../Components/AccountInformation";
-import SectionTitle from "../Components/SectionTitle";
-import Button from "../Components/ui/Button.tsx";
-import { Add } from "../Components/ui/Icons";
+import DashboardSection from "../components/DashboardSection";
+import AccountInformation from "../components/AccountInformation";
+import SectionTitle from "../components/SectionTitle";
+import Button from "../components/ui/Button.tsx";
+import { Add } from "../components/ui/Icons";
 import { Link } from "react-router-dom";
-import UserBooks from "../Components/UserBooks";
+import UserBooks from "../components/UserBooks";
 
 let Dashboard = () => {
   return (

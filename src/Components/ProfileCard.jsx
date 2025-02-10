@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { GetAuth } from "../Context/AuthContext";
+import { GetAuth } from "../context/AuthContext";
 import Button from "./ui/Button.tsx";
 import Modal from "./ui/Modal";
 import { Logout } from "./ui/Icons";

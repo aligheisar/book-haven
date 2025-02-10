@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Button from "../Components/ui/Button.tsx";
+import Button from "../components/ui/Button.tsx";
 
 let BookNotFound = () => {
   return (

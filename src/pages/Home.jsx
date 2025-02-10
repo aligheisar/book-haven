@@ -1,5 +1,5 @@
-import Button from "../Components/ui/Button.tsx";
-import { GetNotifi } from "../Context/NotifiContext";
+import Button from "../components/ui/Button.tsx";
+import { GetNotifi } from "../context/NotifiContext";
 
 let Home = () => {
   let { addNotif } = GetNotifi();

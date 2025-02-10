@@ -1,4 +1,4 @@
-import { GetUser } from "../Context/UserContext";
+import { GetUser } from "../context/UserContext";
 import { validateInputs } from "../util/validate";
 import DashboardAvatar from "./DashboardAvatar";
 import EditableText from "./EditableText";
