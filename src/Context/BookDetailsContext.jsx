@@ -1,10 +1,10 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { toggleFollow } from "../supabase/user";
 import { getBookDetails } from "../supabase/books";
 import { toggleLike } from "../supabase/likes";
 import { GetUser } from "./UserContext";
 import { GetNotifi } from "./NotifiContext";
-import { toggleFollow } from "../supabase/user";
 
 let BookDetailsContext = createContext();
 
@@ -78,25 +78,9 @@ let BookDetailsProvider = ({ children }) => {
     }
   };
 
-  // let addComment = async () => {};
+  let addComment = async () => {};
 
-  // let toggleFollow = async () => {
-  //   try {
-  //     setOptimisticLoading(true);
-  //     let response = await toggleFollowUser(user.username, username);
-
-  //     if (response.success) {
-  //       setTargetUser((prev) => ({ ...prev, isFollow: !prev.isFollow }));
-  //     }
-  //   } catch (error) {
-  //     addNotif({
-  //       type: "danger",
-  //       ...formatError(error),
-  //     });
-  //   } finally {
-  //     setOptimisticLoading(false);
-  //   }
-  // };
+  let removeComment = async () => {};
 
   useEffect(() => {
     let fetchBook = async () => {
@@ -115,6 +99,7 @@ let BookDetailsProvider = ({ children }) => {
               title,
               user,
               comments,
+              genres,
             } = data;
             setBookDetails({
               id,
@@ -126,6 +111,7 @@ let BookDetailsProvider = ({ children }) => {
               isUserFollow,
               isUserLiked,
               comments,
+              genres,
               user: {
                 id: user.id,
                 fullName: user.full_name,
