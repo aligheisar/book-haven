@@ -1,4 +1,4 @@
-import DashbordSection from "../Components/DashbordSection";
+import DashboardSection from "../Components/DashboardSection";
 import AccountInformation from "../Components/AccountInformation";
 import SectionTitle from "../Components/SectionTitle";
 import Button from "../Components/ui/Button.tsx";
@@ -6,14 +6,14 @@ import { Add } from "../Components/ui/Icons";
 import { Link } from "react-router-dom";
 import UserBooks from "../Components/UserBooks";
 
-let Dashbord = () => {
+let Dashboard = () => {
   return (
     <section className="flex h-full w-full items-start justify-center gap-4 pt-6">
-      <DashbordSection>
+      <DashboardSection>
         <SectionTitle>Account Information</SectionTitle>
         <AccountInformation />
-      </DashbordSection>
-      <DashbordSection className="max-w-none flex-1">
+      </DashboardSection>
+      <DashboardSection className="max-w-none flex-1">
         <div className="flex items-center justify-between">
           <SectionTitle className="text-start">Your Books</SectionTitle>
           <Link to="/new-book">
@@ -23,9 +23,9 @@ let Dashbord = () => {
           </Link>
         </div>
         <UserBooks />
-      </DashbordSection>
+      </DashboardSection>
     </section>
   );
 };
 
-export default Dashbord;
+export default Dashboard;

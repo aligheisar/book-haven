@@ -1,9 +1,9 @@
 import { useRef, useState } from "react";
-import { GetUser } from "../Context/UserContext";
-import { Loading } from "./ui/Icons";
+import { GetUser } from "../Context/UserContext.jsx";
+import { Loading } from "./ui/Icons.jsx";
 import { cn } from "../util/cn.ts";
 
-let DashbordAvatar = ({ className, ...props }) => {
+let DashboardAvatar = ({ className, ...props }) => {
   const { changeAvatar, user } = GetUser();
 
   const [loading, setLoading] = useState(false);
@@ -59,4 +59,4 @@ let DashbordAvatar = ({ className, ...props }) => {
   );
 };
 
-export default DashbordAvatar;
+export default DashboardAvatar;

@@ -4,7 +4,7 @@ import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Dashbord from "./pages/Dashbord";
+import Dashboard from "./pages/Dashboard";
 import Users from "./pages/Users";
 import UserProfile from "./pages/UserProfile";
 import NewBook from "./pages/NewBook";
@@ -19,7 +19,7 @@ let App = () => {
         <Route index element={<Home />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
-        <Route path="dashbord" element={<Dashbord />} />
+        <Route path="dashboard" element={<Dashboard />} />
         <Route path="users" element={<Users />} />
         <Route path="users/:username" element={<UserProfile />} />
         <Route

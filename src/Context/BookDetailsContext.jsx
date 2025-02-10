@@ -131,7 +131,7 @@ let BookDetailsProvider = ({ children }) => {
     };
 
     fetchBook();
-  }, [targetUsername, bookTitle, user?.username]);
+  }, [targetUsername, bookTitle]);
 
   let value = {
     data: bookDetails,

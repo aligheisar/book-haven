@@ -12,9 +12,9 @@ let ProfileCard = ({ user }) => {
 
   let navigate = useNavigate();
 
-  let navigateDashbord = () => {
+  let navigateDashboard = () => {
     setIsOpen(false);
-    navigate("dashbord");
+    navigate("dashboard");
   };
 
   let userLogout = () => {
@@ -45,11 +45,11 @@ let ProfileCard = ({ user }) => {
         <Modal className="w-44" onClose={() => setIsOpen(false)}>
           <section className="flex flex-col gap-1">
             <Button
-              onClick={navigateDashbord}
+              onClick={navigateDashboard}
               className="w-full rounded"
               varient="dim"
             >
-              Dashbord
+              Dashboard
             </Button>
             <Button
               Icon={<Logout inher />}

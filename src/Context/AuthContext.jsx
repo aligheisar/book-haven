@@ -6,9 +6,9 @@ import Loading from "../Components/Loading";
 import { GetNotifi } from "./NotifiContext";
 import { GetUser } from "./UserContext";
 
-const authContext = createContext();
+const AuthContext = createContext();
 
-export const GetAuth = () => useContext(authContext);
+export const GetAuth = () => useContext(AuthContext);
 
 export default function AuthProvider({ children }) {
   let { user, setUser, loading, setLoading } = GetUser();
@@ -19,15 +19,14 @@ export default function AuthProvider({ children }) {
 
   let checkUrl = useCallback(() => {
     if (loading) return;
+
     if (
-      (user && location.pathname === "/login") ||
-      (user && location.pathname === "/register") ||
-      (!user && location.pathname === "/dashbord") ||
-      (!user && location.pathname === "/new-book")
+      (!user && ["/dashboard", "/new-book"].includes(location.pathname)) ||
+      (user && ["/login", "/register"].includes(location.pathname))
     ) {
       navigate("/");
     }
-  }, [location.pathname, user, navigate, loading]);
+  }, [location.pathname, loading, user, navigate]);
 
   useEffect(() => {
     checkUrl();
@@ -104,5 +103,5 @@ export default function AuthProvider({ children }) {
 
   if (loading) return <Loading />;
 
-  return <authContext.Provider value={value}>{children}</authContext.Provider>;
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
