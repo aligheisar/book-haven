@@ -1,11 +1,11 @@
-import SectionTitle from "../Components/SectionTitle";
-import GenreInput from "../Components/ui/GenreInput";
-import Button from "../Components/ui/Button.tsx";
-import FormInput from "../Components/ui/FormInput";
-import FormTextarea from "../Components/ui/FormTextarea";
-import FormBookImage from "../Components/ui/FormBookImage";
-import Uploading from "../Components/Uploading";
-import { GetNewBook } from "../Context/NewBookContext";
+import SectionTitle from "../components/SectionTitle";
+import GenreInput from "../components/ui/GenreInput";
+import Button from "../components/ui/Button.tsx";
+import FormInput from "../components/ui/FormInput";
+import FormTextarea from "../components/ui/FormTextarea";
+import FormBookImage from "../components/ui/FormBookImage";
+import Uploading from "../components/Uploading";
+import { GetNewBook } from "../context/NewBookContext";
 
 let NewBook = () => {
   let {

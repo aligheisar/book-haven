@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
-import { GetUser } from "../Context/UserContext.jsx";
-import { Loading } from "./ui/Icons.jsx";
+import { GetUser } from "../context/UserContext";
+import { Loading } from "./ui/Icons";
 import { cn } from "../util/cn.ts";
 
 let DashboardAvatar = ({ className, ...props }) => {

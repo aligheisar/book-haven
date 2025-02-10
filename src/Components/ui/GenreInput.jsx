@@ -1,4 +1,4 @@
-import { GetNewBook } from "../../Context/NewBookContext";
+import { GetNewBook } from "../../context/NewBookContext";
 import Input from "./Input.tsx";
 import AutoCompelete from "./AutoCompelete";
 import GenreContainer from "./GenreContainer";

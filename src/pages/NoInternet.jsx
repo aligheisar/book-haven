@@ -1,4 +1,4 @@
-import Title from "../Components/ui/Title";
+import Title from "../components/ui/Title";
 
 let NoInternet = () => {
   return (

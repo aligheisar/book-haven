@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import Button from "./ui/Button.tsx";
-import { GetBookDetails } from "../Context/BookDetailsContext";
-import { GetUser } from "../Context/UserContext";
+import { GetBookDetails } from "../context/BookDetailsContext";
+import { GetUser } from "../context/UserContext";
 
 let UserInfo = () => {
   let { user } = GetUser();

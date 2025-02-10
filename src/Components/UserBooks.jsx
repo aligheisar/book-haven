@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { GetUser } from "../Context/UserContext";
+import { GetUser } from "../context/UserContext";
 import HorizontalSection from "./ui/HorizontalSection";
 import BookCard from "./BookCard";
 

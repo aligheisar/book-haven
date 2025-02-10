@@ -1,9 +1,9 @@
 import { useState } from "react";
-import Form from "../Components/ui/Form.tsx";
-import FormInput from "../Components/ui/FormInput";
-import { GetAuth } from "../Context/AuthContext";
+import Form from "../components/ui/Form.tsx";
+import FormInput from "../components/ui/FormInput";
+import { GetAuth } from "../context/AuthContext";
 import { loginSchema } from "../config/schema";
-import { GetNotifi } from "../Context/NotifiContext";
+import { GetNotifi } from "../context/NotifiContext";
 import { validateInputs } from "../util/validate";
 
 let Login = () => {

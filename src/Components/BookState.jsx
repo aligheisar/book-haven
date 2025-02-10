@@ -1,6 +1,6 @@
 import LikeSection from "./LikeSection";
 import CommentCount from "./CommentCount";
-import { GetBookDetails } from "../Context/BookDetailsContext";
+import { GetBookDetails } from "../context/BookDetailsContext";
 
 let BookState = () => {
   let { toggleLike, data } = GetBookDetails();

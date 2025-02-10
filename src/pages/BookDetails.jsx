@@ -1,8 +1,8 @@
-import Loading from "../Components/Loading";
-import { GetBookDetails } from "../Context/BookDetailsContext";
-import BookImage from "../Components/BookImage";
+import Loading from "../components/Loading";
+import { GetBookDetails } from "../context/BookDetailsContext";
+import BookImage from "../components/BookImage";
 import BookNotFound from "./BookNotFound";
-import BookInformation from "../Components/BookInformation";
+import BookInformation from "../components/BookInformation";
 
 let BookDetails = () => {
   let { data, error, pageLoading } = GetBookDetails();
