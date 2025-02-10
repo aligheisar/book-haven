@@ -5,6 +5,8 @@ import { getUserByUsername } from "./shared";
 import { currentUser } from "./user";
 
 export async function isLiked(bookId) {
+  if (!currentUser) return false;
+
   const { data, error } = await supabase
     .from("likes")
     .select("user_id, book_id")
@@ -16,16 +18,6 @@ export async function isLiked(bookId) {
 
   return data ? true : false;
 }
-
-// export async function isLikedByUsername(username, bookTitle) {
-//   let user = await getUserByUsername(username);
-
-//   let { data: book } = await getBookByTitle(user.id, bookTitle);
-
-//   if (!book) throw bookNotFoundError;
-
-//   return await isLiked(user.id, book.id);
-// }
 
 async function likeBook(bookId) {
   const { error } = await supabase.from("likes").insert({
