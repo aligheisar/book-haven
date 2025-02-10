@@ -20,6 +20,8 @@ export async function getUserProfile(userId) {
 }
 
 export async function isFollow(userId) {
+  if (!currentUser) return false;
+
   const { data, error } = await supabase
     .from("followers")
     .select("*")
