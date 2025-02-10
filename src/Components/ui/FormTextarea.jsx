@@ -8,6 +8,7 @@ let FormTextarea = ({
   className,
   inputClassName,
   label,
+  varient = "outlined",
   placeholder,
   error,
   ...inputProps
@@ -16,10 +17,10 @@ let FormTextarea = ({
 
   return (
     <section className={cn("flex flex-col gap-2", className)}>
-      <FormLable id={id}>{label}</FormLable>
+      {label && <FormLable id={id}>{label}</FormLable>}
       <TextArea
         className={inputClassName}
-        varient="outlined"
+        varient={varient}
         id={id}
         placeholder={placeholder}
         {...inputProps}
