@@ -1,21 +1,29 @@
-import { GetNewBook } from "../../Context/NewBookContext";
+import { useNavigate } from "react-router-dom";
 import { cn } from "../../util/cn.ts";
 import GenreItem from "./GenreItem";
 
-let GenreContainer = ({ className, genres, ...props }) => {
-  let { handleRemoveGenre } = GetNewBook();
+let GenreContainer = ({ className, removeHandler, genres, ...props }) => {
+  let navigate = useNavigate();
 
   return (
     <section
       {...props}
       className={cn(
-        "custom-scroll-light mb-1 max-h-[140px] flex-1 overflow-y-auto rounded",
+        "custom-scroll-light flex-1 overflow-y-auto rounded",
         className,
       )}
     >
       <div className="flex flex-wrap items-start gap-1">
         {genres.map((i) => (
-          <GenreItem key={i} onClick={() => handleRemoveGenre(i)}>
+          <GenreItem
+            remove={removeHandler ? true : false}
+            key={i}
+            onClick={() =>
+              removeHandler
+                ? removeHandler(i)
+                : navigate(`/books?genre=${encodeURIComponent(i)}`)
+            }
+          >
             {i}
           </GenreItem>
         ))}

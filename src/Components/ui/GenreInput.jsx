@@ -13,13 +13,18 @@ let GenreInput = () => {
     genreInput,
     handleGenreInputFocus,
     handleGenreInputBlur,
+    handleRemoveGenre,
   } = GetNewBook();
 
   return (
     <div className="flex h-full flex-col gap-2">
       <FormLable>Genres</FormLable>
       <section className="flex h-full flex-col rounded-md bg-background/50 p-1">
-        <GenreContainer genres={selectedGenres} />
+        <GenreContainer
+          className="mb-1 max-h-[140px]"
+          removeHandler={handleRemoveGenre}
+          genres={selectedGenres}
+        />
         <Input
           placeholder="input genre"
           disabled={loadingGenres}
