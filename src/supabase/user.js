@@ -8,17 +8,6 @@ export const {
   data: { user: currentUser },
 } = await supabase.auth.getUser();
 
-///!!!!!!
-export async function getUserProfile(userId) {
-  const { data, error } = await supabase
-    .from("users")
-    .select("*")
-    .eq("id", userId)
-    .single();
-  if (error) throw error;
-  return data;
-}
-
 export async function isFollow(userId) {
   if (!currentUser) return false;
 
@@ -55,21 +44,6 @@ export async function unFollow(userId) {
 
   return { success: true };
 }
-
-// export async function checkIfFollowing(username) {
-//   let user = await getUserByUsername(username);
-
-//   let isFollows = await isFollow(user.id);
-
-//   return {
-//     success: true,
-//     data: {
-//       fullName: user.full_name,
-//       avatarUrl: user.avatar_url,
-//       isFollow: !!isFollows,
-//     },
-//   };
-// }
 
 export async function toggleFollow(username) {
   let user = await getUserByUsername(username);

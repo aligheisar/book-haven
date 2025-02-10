@@ -1,5 +1,4 @@
-import { createContext, useCallback, useContext, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { createContext, useContext } from "react";
 import { login, logout, register } from "../supabase/auth";
 import { formatError } from "../util/format";
 import Loading from "../components/Loading";
@@ -13,24 +12,6 @@ export const GetAuth = () => useContext(AuthContext);
 export default function AuthProvider({ children }) {
   let { user, setUser, loading, setLoading } = GetUser();
   let { addNotif } = GetNotifi();
-
-  // const navigate = useNavigate();
-  // const location = useLocation();
-
-  // let checkUrl = useCallback(() => {
-  //   if (loading) return;
-
-  //   if (
-  //     (!user && ["/dashboard", "/new-book"].includes(location.pathname)) ||
-  //     (user && ["/login", "/register"].includes(location.pathname))
-  //   ) {
-  //     navigate("/");
-  //   }
-  // }, [location.pathname, loading, user, navigate]);
-
-  // useEffect(() => {
-  //   checkUrl();
-  // }, [checkUrl]);
 
   let registerUser = async (email, password, username, fullName) => {
     try {
