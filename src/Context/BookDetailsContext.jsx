@@ -1,10 +1,19 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { useParams } from "react-router-dom";
 import { toggleFollow } from "../supabase/user";
 import { getBookDetails } from "../supabase/books";
 import { toggleLike } from "../supabase/likes";
+import { addComment, removeComment } from "../supabase/comments";
 import { GetUser } from "./UserContext";
 import { GetNotifi } from "./NotifiContext";
+import { nanoid } from "nanoid";
+import { generateUTCTimestamp } from "../util/format";
 
 let BookDetailsContext = createContext();
 
@@ -19,7 +28,94 @@ let BookDetailsProvider = ({ children }) => {
   const [bookDetails, setBookDetails] = useState(null);
   const [error, setError] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
-  const [optimisticLoading, setOptimisticLoading] = useState(false);
+  const [optimisticLoading, setOptimisticLoading] = useState({
+    like: false,
+    follow: false,
+    comment: false,
+  });
+  const [commentContent, setCommentContent] = useState({
+    value: "",
+    error: null,
+  });
+
+  let fetchBook = useCallback(async () => {
+    try {
+      let { success, data } = await getBookDetails(targetUsername, bookTitle);
+      if (success) {
+        if (data) {
+          let {
+            description,
+            id,
+            image_url,
+            likes,
+            isUserFollow,
+            isUserLiked,
+            price,
+            title,
+            user,
+            comments,
+            genres,
+          } = data;
+          setBookDetails({
+            id,
+            title,
+            description,
+            imageUrl: image_url,
+            price,
+            likes,
+            isUserFollow,
+            isUserLiked,
+            comments,
+            genres,
+            user: {
+              id: user.id,
+              fullName: user.full_name,
+              username: user.username,
+              avatarUrl: user.avatar_url,
+            },
+          });
+        } else {
+          setError(true);
+        }
+      }
+    } catch (error) {
+      setError(true);
+    } finally {
+      setPageLoading(false);
+    }
+  }, [targetUsername, bookTitle]);
+
+  useEffect(() => {
+    fetchBook();
+  }, [fetchBook]);
+
+  let handleAddCommentSubmit = (e) => {
+    e.preventDefault();
+
+    if (!commentContent.value.trim()) {
+      addNotif({
+        type: "danger",
+        title: "invalid Commnet",
+        desc: "Comment field can't be empty",
+      });
+      setCommentContent({ value: "", error: null });
+      return;
+    }
+
+    addBookComment();
+
+    setCommentContent({ value: "", error: null });
+  };
+
+  let handleCommentChange = (e) => {
+    let { value } = e.target;
+
+    let error = null;
+    if (!value.trim()) {
+      error = "this field can't be empty";
+    }
+    setCommentContent({ value, error });
+  };
 
   let toggleLikeBook = async () => {
     if (!user) {
@@ -31,9 +127,9 @@ let BookDetailsProvider = ({ children }) => {
       return;
     }
 
-    let prevState = bookDetails;
+    setOptimisticLoading((prev) => ({ ...prev, like: true }));
 
-    setOptimisticLoading(true);
+    let prevState = bookDetails;
 
     setBookDetails((prev) => ({
       ...prev,
@@ -46,7 +142,7 @@ let BookDetailsProvider = ({ children }) => {
     } catch (error) {
       setBookDetails(prevState);
     } finally {
-      setOptimisticLoading(false);
+      setOptimisticLoading((prev) => ({ ...prev, like: false }));
     }
   };
 
@@ -60,9 +156,9 @@ let BookDetailsProvider = ({ children }) => {
       return;
     }
 
-    let prevState = bookDetails;
+    setOptimisticLoading((prev) => ({ ...prev, follow: true }));
 
-    setOptimisticLoading(true);
+    let prevState = bookDetails;
 
     setBookDetails((prev) => ({
       ...prev,
@@ -74,64 +170,59 @@ let BookDetailsProvider = ({ children }) => {
     } catch (error) {
       setBookDetails(prevState);
     } finally {
-      setOptimisticLoading(false);
+      setOptimisticLoading((prev) => ({ ...prev, follow: false }));
     }
   };
 
-  let addComment = async () => {};
+  let addBookComment = async () => {
+    setOptimisticLoading((prev) => ({ ...prev, comment: true }));
 
-  let removeComment = async () => {};
+    let prevState = bookDetails;
 
-  useEffect(() => {
-    let fetchBook = async () => {
-      try {
-        let { success, data } = await getBookDetails(targetUsername, bookTitle);
-        if (success) {
-          if (data) {
-            let {
-              description,
-              id,
-              image_url,
-              likes,
-              isUserFollow,
-              isUserLiked,
-              price,
-              title,
-              user,
-              comments,
-              genres,
-            } = data;
-            setBookDetails({
-              id,
-              title,
-              description,
-              imageUrl: image_url,
-              price,
-              likes,
-              isUserFollow,
-              isUserLiked,
-              comments,
-              genres,
-              user: {
-                id: user.id,
-                fullName: user.full_name,
-                username: user.username,
-                avatarUrl: user.avatar_url,
-              },
-            });
-          } else {
-            setError(true);
-          }
-        }
-      } catch (error) {
-        setError(true);
-      } finally {
-        setPageLoading(false);
-      }
+    let newComment = {
+      id: nanoid(),
+      created_at: generateUTCTimestamp(),
+      content: commentContent.value,
+      user: {
+        full_name: user.fullName,
+        username: user.username,
+        avatar_url: user.avatarUrl,
+      },
     };
 
-    fetchBook();
-  }, [targetUsername, bookTitle]);
+    setBookDetails((prev) => ({
+      ...prev,
+      comments: [newComment, ...prev.comments],
+    }));
+
+    try {
+      await addComment(bookDetails.id, commentContent.value);
+      await fetchBook();
+    } catch (error) {
+      setBookDetails(prevState);
+    } finally {
+      setOptimisticLoading((prev) => ({ ...prev, comment: false }));
+    }
+  };
+
+  let removeBookComment = async (targetId) => {
+    let prevState = bookDetails;
+
+    setOptimisticLoading((prev) => ({ ...prev, comment: true }));
+
+    setBookDetails((prev) => ({
+      ...prev,
+      comments: prev.comments.filter((i) => i.id !== targetId),
+    }));
+
+    try {
+      await removeComment(targetId);
+    } catch (error) {
+      setBookDetails(prevState);
+    } finally {
+      setOptimisticLoading((prev) => ({ ...prev, comment: false }));
+    }
+  };
 
   let value = {
     data: bookDetails,
@@ -140,6 +231,10 @@ let BookDetailsProvider = ({ children }) => {
     optimisticLoading,
     toggleLike: toggleLikeBook,
     toggleFollow: toggleFollowUser,
+    commentContent,
+    handleCommentChange,
+    handleAddCommentSubmit,
+    removeBookComment,
   };
   return (
     <BookDetailsContext.Provider value={value}>
