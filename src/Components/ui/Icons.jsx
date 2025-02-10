@@ -96,3 +96,14 @@ export let Comment = ({ size = 20, color = "black", inher, ...props }) => {
     </svg>
   );
 };
+
+export let Trash = ({ size = 20, color = "black", inher, ...props }) => {
+  return (
+    <svg viewBox="0 0 24 24" width={size} height={size} {...props}>
+      <path
+        d="M10 2L9 3L4 3L4 5L20 5L20 3L15 3L14 2L10 2 z M 5 7L5 20C5 21.1 5.9 22 7 22L17 22C18.1 22 19 21.1 19 20L19 7L5 7 z M 8 9L10 9L10 20L8 20L8 9 z M 14 9L16 9L16 20L14 20L14 9 z"
+        fill={!inher ? color : null}
+      />
+    </svg>
+  );
+};
