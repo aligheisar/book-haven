@@ -62,6 +62,9 @@ export async function getBookDetails(username, title) {
             id, content, created_at,
             user:users ( username, full_name, avatar_url )
         ),
+        genres:book_genres (
+            genres ( name )
+        ),
         likes ( user_id )
       `,
     )
@@ -84,6 +87,7 @@ export async function getBookDetails(username, title) {
     likes: data.likes.length,
     isUserLiked,
     isUserFollow,
+    genres: data.genres.map((i) => i.genres.name),
     user: {
       id: user.id,
       full_name: user.full_name,
