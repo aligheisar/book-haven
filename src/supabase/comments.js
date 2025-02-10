@@ -1,14 +1,30 @@
 import { supabase } from "./client";
+import { currentUser } from "./user";
+import { firstLogin } from "./errorObj";
 
-export async function addComment(userId, bookId, comment) {
+export async function addComment(bookId, content) {
+  if (!currentUser) throw firstLogin;
+
   const { data, error } = await supabase.from("comments").insert({
-    user_id: userId,
+    user_id: currentUser.id,
     book_id: bookId,
-    comment,
+    content,
   });
 
   if (error) throw error;
-  return data;
+
+  return { success: true, data };
+}
+
+export async function removeComment(commentId) {
+  const { data, error } = await supabase
+    .from("comments")
+    .delete()
+    .eq("id", commentId);
+
+  if (error) throw error;
+
+  return { success: true, data };
 }
 
 export async function getComments(bookId) {
@@ -17,5 +33,6 @@ export async function getComments(bookId) {
     .select("*")
     .eq("book_id", bookId);
   if (error) throw error;
-  return data;
+
+  return { success: true, data };
 }

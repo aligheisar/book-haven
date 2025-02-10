@@ -12,3 +12,8 @@ export const somethingHappend = {
   status: "Something Happends",
   message: "some error happends",
 };
+
+export const firstLogin = {
+  status: "Faild",
+  message: "Please first Loggin to you account",
+};

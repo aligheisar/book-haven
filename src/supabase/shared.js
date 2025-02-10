@@ -1,6 +1,5 @@
-import { getBookByTitle } from "./books";
 import { supabase } from "./client";
-import { bookNotFoundError, userNotFoundError } from "./errorObj";
+import { userNotFoundError } from "./errorObj";
 
 export async function getUserById(id) {
   const { data, error } = await supabase.from("users").select("*").eq("id", id);

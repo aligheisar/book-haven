@@ -87,6 +87,7 @@ export async function getBookDetails(username, title) {
     likes: data.likes.length,
     isUserLiked,
     isUserFollow,
+    comments: data.comments.reverse(),
     genres: data.genres.map((i) => i.genres.name),
     user: {
       id: user.id,
