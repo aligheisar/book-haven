@@ -1,5 +1,5 @@
 import { createPortal } from "react-dom";
-import { GetNotifi } from "../../Context/NotifiContext";
+import { GetNotifi } from "../../context/NotifiContext";
 import NotifiItem from "./NotifiItem";
 
 let NotifiContainer = () => {

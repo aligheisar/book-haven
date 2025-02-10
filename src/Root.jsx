@@ -1,6 +1,6 @@
 import App from "./App";
 import NotifiContainer from "./components/notifi/NotifiContainer";
-import Providers from "./Context/Providers";
+import Providers from "./context/Providers";
 
 let Root = () => {
   return (

@@ -1,4 +1,4 @@
-import { GetNotifi } from "../../Context/NotifiContext";
+import { GetNotifi } from "../../context/NotifiContext";
 import { cn } from "../../util/cn.ts";
 import Button from "../ui/Button.tsx";
 import { Close } from "../ui/Icons";
