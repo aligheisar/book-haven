@@ -1,28 +1,43 @@
-import SectionTitle from "../components/SectionTitle";
+import { useState } from "react";
+import { GetNewBook } from "../context/NewBookContext";
+import { validateNewBookInputs } from "../util/validate";
 import GenreInput from "../components/ui/GenreInput";
 import Button from "../components/ui/Button.tsx";
 import FormInput from "../components/ui/FormInput";
 import FormTextarea from "../components/ui/FormTextarea";
 import FormBookImage from "../components/ui/FormBookImage";
+import SectionTitle from "../components/SectionTitle";
 import Uploading from "../components/Uploading";
-import { GetNewBook } from "../context/NewBookContext";
 
 let NewBook = () => {
-  let {
-    formData,
-    handleFileChange,
-    handleFormChange,
-    handleFormSubmit,
-    image,
-    uploading,
-  } = GetNewBook();
+  let { handleFileChange, image, handleFormSubmit, uploading } = GetNewBook();
+
+  const [formData, setFormData] = useState({
+    title: { value: "", error: null },
+    description: { value: "", error: null },
+    price: { value: 0, error: null },
+  });
+
+  let handleFormChange = (e) => {
+    let { name, value } = e.target;
+
+    let error = validateNewBookInputs(name, value);
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: { error, value },
+    }));
+  };
 
   return (
     <section className="flex h-full w-full items-center justify-center">
       {uploading && <Uploading />}
       <section className="flex w-full max-w-[720px] flex-col gap-4 rounded-xl bg-surface px-3 py-4">
         <SectionTitle>New Book</SectionTitle>
-        <form onSubmit={handleFormSubmit} className="flex flex-col gap-4">
+        <form
+          onSubmit={(e) => handleFormSubmit(e, formData)}
+          className="flex flex-col gap-4"
+        >
           <div className="flex flex-1 gap-3">
             <FormBookImage handleFileChange={handleFileChange} url={image} />
             <div className="flex flex-1 flex-col gap-2">
