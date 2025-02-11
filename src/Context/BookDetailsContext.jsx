@@ -28,15 +28,6 @@ let BookDetailsProvider = ({ children }) => {
   const [bookDetails, setBookDetails] = useState(null);
   const [error, setError] = useState(false);
   const [pageLoading, setPageLoading] = useState(true);
-  const [optimisticLoading, setOptimisticLoading] = useState({
-    like: false,
-    follow: false,
-    comment: false,
-  });
-  const [commentContent, setCommentContent] = useState({
-    value: "",
-    error: null,
-  });
 
   let fetchBook = useCallback(async () => {
     try {
@@ -56,45 +47,10 @@ let BookDetailsProvider = ({ children }) => {
   }, [targetUsername, bookTitle]);
 
   useEffect(() => {
-    fetchBook();
-  }, [fetchBook]);
-
-  let handleAddCommentSubmit = (e) => {
-    e.preventDefault();
-
-    if (!user) {
-      addNotif({
-        type: "warning",
-        title: "Your not Logged in",
-        desc: "Please first login to your account",
-      });
-      return;
+    if (!bookDetails) {
+      fetchBook();
     }
-
-    if (!commentContent.value.trim()) {
-      addNotif({
-        type: "danger",
-        title: "invalid Commnet",
-        desc: "Comment field can't be empty",
-      });
-      setCommentContent({ value: "", error: null });
-      return;
-    }
-
-    addBookComment();
-
-    setCommentContent({ value: "", error: null });
-  };
-
-  let handleCommentChange = (e) => {
-    let { value } = e.target;
-
-    let error = null;
-    if (!value.trim()) {
-      error = "this field can't be empty";
-    }
-    setCommentContent({ value, error });
-  };
+  }, [fetchBook, bookDetails]);
 
   let toggleLikeBook = async () => {
     if (!user) {
@@ -105,8 +61,6 @@ let BookDetailsProvider = ({ children }) => {
       });
       return;
     }
-
-    setOptimisticLoading((prev) => ({ ...prev, like: true }));
 
     let prevState = bookDetails;
 
@@ -120,8 +74,6 @@ let BookDetailsProvider = ({ children }) => {
       await toggleLike(bookDetails.id);
     } catch (error) {
       setBookDetails(prevState);
-    } finally {
-      setOptimisticLoading((prev) => ({ ...prev, like: false }));
     }
   };
 
@@ -135,8 +87,6 @@ let BookDetailsProvider = ({ children }) => {
       return;
     }
 
-    setOptimisticLoading((prev) => ({ ...prev, follow: true }));
-
     let prevState = bookDetails;
 
     setBookDetails((prev) => ({
@@ -148,20 +98,34 @@ let BookDetailsProvider = ({ children }) => {
       await toggleFollow(targetUsername);
     } catch (error) {
       setBookDetails(prevState);
-    } finally {
-      setOptimisticLoading((prev) => ({ ...prev, follow: false }));
     }
   };
 
-  let addBookComment = async () => {
-    setOptimisticLoading((prev) => ({ ...prev, comment: true }));
+  let addBookComment = async (content) => {
+    if (!user) {
+      addNotif({
+        type: "warning",
+        title: "Your not Logged in",
+        desc: "Please first login to your account",
+      });
+      return;
+    }
+
+    if (!content.trim()) {
+      addNotif({
+        type: "warning",
+        title: "Invalid Input",
+        desc: "Please Enter a valid Comment",
+      });
+      return;
+    }
 
     let prevState = bookDetails;
 
     let newComment = {
       id: nanoid(),
       createdAt: generateUTCTimestamp(),
-      content: commentContent.value,
+      content: content,
       user: {
         fullName: user.fullName,
         username: user.username,
@@ -175,19 +139,15 @@ let BookDetailsProvider = ({ children }) => {
     }));
 
     try {
-      await addComment(bookDetails.id, commentContent.value);
+      await addComment(bookDetails.id, content);
       await fetchBook();
     } catch (error) {
       setBookDetails(prevState);
-    } finally {
-      setOptimisticLoading((prev) => ({ ...prev, comment: false }));
     }
   };
 
   let removeBookComment = async (targetId) => {
     let prevState = bookDetails;
-
-    setOptimisticLoading((prev) => ({ ...prev, comment: true }));
 
     setBookDetails((prev) => ({
       ...prev,
@@ -198,8 +158,6 @@ let BookDetailsProvider = ({ children }) => {
       await removeComment(targetId);
     } catch (error) {
       setBookDetails(prevState);
-    } finally {
-      setOptimisticLoading((prev) => ({ ...prev, comment: false }));
     }
   };
 
@@ -207,12 +165,9 @@ let BookDetailsProvider = ({ children }) => {
     data: bookDetails,
     error,
     pageLoading,
-    optimisticLoading,
     toggleLike: toggleLikeBook,
     toggleFollow: toggleFollowUser,
-    commentContent,
-    handleCommentChange,
-    handleAddCommentSubmit,
+    addBookComment,
     removeBookComment,
   };
   return (

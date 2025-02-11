@@ -1,15 +1,25 @@
+import { useRef } from "react";
 import { GetBookDetails } from "../context/BookDetailsContext";
 import SectionTitle from "./SectionTitle";
 import Button from "./ui/Button.tsx";
-import FormTextarea from "./ui/FormTextarea";
+import Textarea from "./ui/Textarea.tsx";
 
 let AddComment = () => {
-  let { handleAddCommentSubmit, handleCommentChange, commentContent } =
-    GetBookDetails();
+  let { addBookComment } = GetBookDetails();
+
+  let textareaRef = useRef();
+
+  let handleSubmit = (e) => {
+    e.preventDefault();
+
+    addBookComment(textareaRef.current.value);
+
+    textareaRef.current.value = "";
+  };
 
   return (
     <form
-      onSubmit={handleAddCommentSubmit}
+      onSubmit={handleSubmit}
       className="flex flex-col gap-2 rounded-lg bg-surface p-3"
     >
       <div className="flex items-center justify-between">
@@ -20,14 +30,12 @@ let AddComment = () => {
           Add
         </Button>
       </div>
-      <FormTextarea
+      <Textarea
+        ref={textareaRef}
+        className="rounded"
         varient="filled"
-        inputClassName="rounded"
         placeholder="Enter your Comment here"
-        value={commentContent.value}
-        onChange={handleCommentChange}
-        error={commentContent.error}
-      ></FormTextarea>
+      ></Textarea>
     </form>
   );
 };
