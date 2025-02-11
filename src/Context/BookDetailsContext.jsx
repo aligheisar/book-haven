@@ -92,6 +92,15 @@ let BookDetailsProvider = ({ children }) => {
   let handleAddCommentSubmit = (e) => {
     e.preventDefault();
 
+    if (!user) {
+      addNotif({
+        type: "warning",
+        title: "Your not Logged in",
+        desc: "Please first login to your account",
+      });
+      return;
+    }
+
     if (!commentContent.value.trim()) {
       addNotif({
         type: "danger",
