@@ -7,7 +7,6 @@ import FormLable from "./FormLable";
 let GenreInput = () => {
   let {
     loadingGenres,
-    filteredGenres,
     selectedGenres,
     handleGenreInputChange,
     genreInput,
@@ -35,7 +34,7 @@ let GenreInput = () => {
           className="rounded"
         />
         <div className="relative">
-          <AutoCompelete genres={filteredGenres} />
+          <AutoCompelete />
         </div>
       </section>
     </div>
