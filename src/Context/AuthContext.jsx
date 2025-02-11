@@ -25,6 +25,7 @@ export default function AuthProvider({ children }) {
           type: "success",
         });
         setUser(user);
+        window.location.reload(true);
       }
     } catch (error) {
       addNotif({
@@ -49,6 +50,7 @@ export default function AuthProvider({ children }) {
         });
         setUser(user);
       }
+      window.location.reload(true);
     } catch (error) {
       addNotif({
         ...formatError(error),
