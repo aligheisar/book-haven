@@ -1,12 +1,17 @@
 import { supabase } from "./client";
+import { firstLogin } from "./errorObj";
+import { currentUser } from "./user";
 
-export async function followUser(followerId, followingId) {
+export async function followUser(followingId) {
+  if (!currentUser) throw firstLogin;
+
   const { data, error } = await supabase.from("follows").insert({
-    follower_id: followerId,
+    follower_id: currentUser.id,
     following_id: followingId,
   });
 
   if (error) throw error;
+
   return data;
 }
 

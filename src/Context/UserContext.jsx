@@ -10,7 +10,7 @@ import { GetNetwork } from "./NetworkContext";
 import { changeUserInformation } from "../supabase/user";
 import { GetNotifi } from "./NotifiContext";
 import { formatError } from "../util/format";
-import { getBooksByUsername } from "../supabase/books";
+import { getCurrentUsersBooks } from "../supabase/books";
 
 let UserContext = createContext();
 
@@ -23,6 +23,7 @@ let UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [userBooks, setUserBooks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [userBooksLoading, setUserBooksLoading] = useState(false);
 
   let initializeUser = useCallback(async () => {
     try {
@@ -47,26 +48,21 @@ let UserProvider = ({ children }) => {
 
   let fetchUserBooks = useCallback(async () => {
     try {
-      let response = await getBooksByUsername(user.username);
+      setUserBooksLoading(true);
 
-      setUserBooks(
-        response.data.map((i) => ({
-          id: i.id,
-          title: i.title,
-          price: i.price,
-          imageUrl: i.image_url,
-          fullName: i.full_name,
-          username: i.username,
-        })),
-      );
+      let response = await getCurrentUsersBooks(user);
+
+      setUserBooks(response.data);
     } catch (error) {
       addNotif({
         type: "warning",
         title: "can't load",
         desc: "we can't load user books",
       });
+    } finally {
+      setUserBooksLoading(false);
     }
-  }, [user?.username, addNotif]);
+  }, [user, addNotif]);
 
   let changeAvatar = async (file, fileName) => {
     try {
@@ -123,9 +119,10 @@ let UserProvider = ({ children }) => {
   let value = {
     user,
     userBooks,
+    loading,
+    userBooksLoading,
     setUser,
     fetchUserBooks,
-    loading,
     setLoading,
     changeAvatar,
     changeFullName,

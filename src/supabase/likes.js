@@ -1,7 +1,5 @@
-import { getBookByTitle } from "./books";
 import { supabase } from "./client";
-import { bookNotFoundError, somethingHappend } from "./errorObj";
-import { getUserByUsername } from "./shared";
+import { bookNotFoundError, firstLogin, somethingHappend } from "./errorObj";
 import { currentUser } from "./user";
 
 export async function isLiked(bookId) {
@@ -20,6 +18,8 @@ export async function isLiked(bookId) {
 }
 
 async function likeBook(bookId) {
+  if (!currentUser) throw firstLogin;
+
   const { error } = await supabase.from("likes").insert({
     user_id: currentUser.id,
     book_id: bookId,
@@ -31,6 +31,8 @@ async function likeBook(bookId) {
 }
 
 async function unLikeBook(bookId) {
+  if (!currentUser) throw firstLogin;
+
   const { error } = await supabase
     .from("likes")
     .delete()
@@ -42,22 +44,18 @@ async function unLikeBook(bookId) {
   return { success: true };
 }
 
-export async function toggleLike(username, bookTitle) {
-  let user = await getUserByUsername(username);
+export async function toggleLike(bookId) {
+  if (!bookId) throw bookNotFoundError;
 
-  let { data: book } = await getBookByTitle(user.id, bookTitle);
-
-  if (!book) throw bookNotFoundError;
-
-  let isLikedFlag = await isLiked(book.id);
+  let isLikedFlag = await isLiked(bookId);
 
   if (isLikedFlag) {
-    let { success } = await unLikeBook(book.id);
+    let { success } = await unLikeBook(bookId);
     if (success) {
       return { result: false };
     }
   } else {
-    let { success } = await likeBook(book.id);
+    let { success } = await likeBook(bookId);
     if (success) {
       return { result: true };
     }

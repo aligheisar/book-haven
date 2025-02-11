@@ -3,6 +3,7 @@ import { supabase } from "./client";
 import { uploadAvatarImage } from "./storage";
 import { validateInputs } from "../util/validate";
 import { getUserByUsername } from "./shared";
+import { firstLogin, fullNameNotValid } from "./errorObj";
 
 export const {
   data: { user: currentUser },
@@ -24,6 +25,8 @@ export async function isFollow(userId) {
 }
 
 export async function follow(userId) {
+  if (!currentUser) throw firstLogin;
+
   let { error } = await supabase
     .from("followers")
     .insert({ follower_id: currentUser.id, following_id: userId });
@@ -34,6 +37,8 @@ export async function follow(userId) {
 }
 
 export async function unFollow(userId) {
+  if (!currentUser) throw firstLogin;
+
   let { error } = await supabase
     .from("followers")
     .delete()
@@ -68,14 +73,7 @@ export async function toggleFollow(username) {
 async function changeFullName(username, value) {
   let response = validateInputs("fullName", value);
 
-  if (response) {
-    let error = {
-      status: "Faild",
-      message: "full name is not valid",
-    };
-
-    throw error;
-  }
+  if (response) throw fullNameNotValid;
 
   const { data, error } = await supabase
     .from("users")

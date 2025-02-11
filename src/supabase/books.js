@@ -3,8 +3,8 @@ import { BOOK_IMAGES } from "../config/constants";
 import { getUserByUsername } from "./shared";
 import { uploadBookImage } from "./storage";
 import { isLiked } from "./likes";
-import { isFollow } from "./user";
-import { userNotFoundError } from "./errorObj";
+import { currentUser, isFollow } from "./user";
+import { bookAlreadyExist, firstLogin, userNotFoundError } from "./errorObj";
 
 export async function getBooks() {
   const { data, error } = await supabase.from("books").select("*");
@@ -41,8 +41,31 @@ export async function getBooksByUsername(username) {
       id: i.id,
       title: i.title,
       price: i.price,
-      image_url: i.image_url,
-      full_name: user.full_name,
+      imageUrl: i.image_url,
+      fullName: user.full_name,
+      username: user.username,
+    })),
+  };
+}
+
+export async function getCurrentUsersBooks(user) {
+  if (!currentUser) throw firstLogin;
+
+  const { data, error } = await supabase
+    .from("books")
+    .select("id, title, price, image_url")
+    .eq("user_id", currentUser.id);
+
+  if (error) throw error;
+
+  return {
+    success: true,
+    data: data.map((i) => ({
+      id: i.id,
+      title: i.title,
+      price: i.price,
+      imageUrl: i.image_url,
+      fullName: user.fullName,
       username: user.username,
     })),
   };
@@ -83,17 +106,32 @@ export async function getBookDetails(username, title) {
   isUserFollow = await isFollow(user.id);
 
   let newData = {
-    ...data,
+    id: data.id,
+    title: data.title,
+    price: data.price,
+    description: data.description,
+    imageUrl: data.image_url,
     likes: data.likes.length,
-    isUserLiked,
     isUserFollow,
-    comments: data.comments.reverse(),
+    isUserLiked,
+    comments: data.comments
+      .map((i) => ({
+        id: i.id,
+        content: i.content,
+        createdAt: i.created_at,
+        user: {
+          fullName: i.user.full_name,
+          username: i.user.username,
+          avatarUrl: i.user.avatar_url,
+        },
+      }))
+      .reverse(),
     genres: data.genres.map((i) => i.genres.name),
     user: {
       id: user.id,
-      full_name: user.full_name,
+      fullName: user.full_name,
       username: user.username,
-      avatar_url: user.avatar_url,
+      avatarUrl: user.avatar_url,
     },
   };
 
@@ -108,25 +146,18 @@ export async function addBook(
   image,
   genres,
 ) {
-  const { id: userId } = await getUserByUsername(username);
+  if (!currentUser) return firstLogin;
 
   const { data: checkExistData, error: checkExistError } = await supabase
     .from("books")
     .select("id")
-    .eq("user_id", userId)
+    .eq("user_id", currentUser.id)
     .eq("title", title)
     .maybeSingle();
 
   if (checkExistError) throw checkExistError;
 
-  if (checkExistData) {
-    let errorObj = {
-      status: "Faild to add Book",
-      message: "this Book is Already exist",
-    };
-
-    throw errorObj;
-  }
+  if (checkExistData) throw bookAlreadyExist;
 
   let imageUrl = null;
   if (image) {
@@ -137,7 +168,7 @@ export async function addBook(
   }
 
   const { data, error } = await supabase.rpc("add_book_with_genres", {
-    p_user_id: userId,
+    p_user_id: currentUser.id,
     p_title: title,
     p_description: description,
     p_price: price,

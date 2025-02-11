@@ -43,37 +43,7 @@ let BookDetailsProvider = ({ children }) => {
       let { success, data } = await getBookDetails(targetUsername, bookTitle);
       if (success) {
         if (data) {
-          let {
-            description,
-            id,
-            image_url,
-            likes,
-            isUserFollow,
-            isUserLiked,
-            price,
-            title,
-            user,
-            comments,
-            genres,
-          } = data;
-          setBookDetails({
-            id,
-            title,
-            description,
-            imageUrl: image_url,
-            price,
-            likes,
-            isUserFollow,
-            isUserLiked,
-            comments,
-            genres,
-            user: {
-              id: user.id,
-              fullName: user.full_name,
-              username: user.username,
-              avatarUrl: user.avatar_url,
-            },
-          });
+          setBookDetails(data);
         } else {
           setError(true);
         }
@@ -147,7 +117,7 @@ let BookDetailsProvider = ({ children }) => {
     }));
 
     try {
-      await toggleLike(targetUsername, bookTitle);
+      await toggleLike(bookDetails.id);
     } catch (error) {
       setBookDetails(prevState);
     } finally {
