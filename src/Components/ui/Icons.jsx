@@ -118,3 +118,14 @@ export let Refresh = ({ size = 20, color = "black", inher, ...props }) => {
     </svg>
   );
 };
+
+export let VerticalMenu = ({ size = 20, color = "black", inher, ...props }) => {
+  return (
+    <svg viewBox="0 0 48 48" width={size} height={size} {...props}>
+      <path
+        d="M24 34A4 4 0 1024 42 4 4 0 1024 34zM24 20A4 4 0 1024 28 4 4 0 1024 20zM24 6A4 4 0 1024 14 4 4 0 1024 6z"
+        fill={!inher ? color : null}
+      />
+    </svg>
+  );
+};
