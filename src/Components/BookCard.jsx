@@ -14,7 +14,9 @@ let BookCard = ({
   let navigate = useNavigate();
 
   let handleClick = () => {
-    navigate(`/users/${username}/${title}`);
+    navigate(
+      `/users/${encodeURIComponent(username)}/${encodeURIComponent(title)}`,
+    );
   };
 
   return (
