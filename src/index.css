@@ -92,7 +92,7 @@
 .backdrop {
   opacity: 0;
 
-  & > section {
+  &>section {
     translate: 0 -20px;
     opacity: 1;
   }
@@ -101,8 +101,13 @@
 .backdrop.active {
   opacity: 1;
 
-  & > section {
+  &>section {
     translate: 0 0;
     opacity: 1;
   }
+}
+
+.menu.left {
+  left: unset;
+  right: 0;
 }
