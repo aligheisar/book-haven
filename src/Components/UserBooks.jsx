@@ -1,10 +1,11 @@
 import { useEffect } from "react";
 import { GetUser } from "../context/UserContext";
 import HorizontalSection from "./ui/HorizontalSection";
+import BooksLoading from "./BooksLoading";
 import BookCard from "./BookCard";
 
 let UserBooks = () => {
-  let { user, userBooks, fetchUserBooks } = GetUser();
+  let { user, userBooks, fetchUserBooks, userBooksLoading } = GetUser();
 
   useEffect(() => {
     fetchUserBooks();
@@ -12,16 +13,24 @@ let UserBooks = () => {
 
   return (
     <HorizontalSection>
-      {userBooks.map((i) => (
-        <BookCard
-          key={i.id}
-          title={i.title}
-          price={i.price}
-          image={i.imageUrl}
-          fullName={i.fullName}
-          username={i.username}
-        />
-      ))}
+      {userBooksLoading ? (
+        <div className="flex h-44 w-full items-center justify-center">
+          <BooksLoading />
+        </div>
+      ) : (
+        userBooks &&
+        userBooks.length > 0 &&
+        userBooks.map((i) => (
+          <BookCard
+            key={i.id}
+            title={i.title}
+            price={i.price}
+            image={i.imageUrl}
+            fullName={i.fullName}
+            username={i.username}
+          />
+        ))
+      )}
     </HorizontalSection>
   );
 };

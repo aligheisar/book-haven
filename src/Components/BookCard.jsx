@@ -21,7 +21,7 @@ let BookCard = ({
     <article
       onClick={handleClick}
       className={cn(
-        "flex h-44 w-64 gap-2 rounded-lg bg-secondary-surface p-[6px]",
+        "flex h-44 w-64 shrink-0 gap-2 rounded-lg bg-secondary-surface p-[6px]",
         className,
       )}
       {...props}

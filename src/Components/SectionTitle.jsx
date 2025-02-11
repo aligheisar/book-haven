@@ -4,7 +4,7 @@ let SectionTitle = ({ children, className, ...props }) => {
   return (
     <h1
       className={cn([
-        "text-center font-serif text-3xl text-secondary-text",
+        "text-nowrap text-center font-serif text-3xl text-secondary-text",
         className,
       ])}
       {...props}
