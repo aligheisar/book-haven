@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { timeAgo } from "../util/format";
 import { Trash } from "./ui/Icons";
+import { Fragment } from "react";
 
 let Comment = ({ comment, currentUser, removeHandler }) => {
   return (
@@ -34,7 +35,14 @@ let Comment = ({ comment, currentUser, removeHandler }) => {
           </span>
         </div>
       </div>
-      <p className="p-1 text-text">{comment.content}</p>
+      <p className="p-1 text-text">
+        {comment.content.split("\n").map((i, index) => (
+          <Fragment key={index}>
+            {i}
+            <br />
+          </Fragment>
+        ))}
+      </p>
     </div>
   );
 };
