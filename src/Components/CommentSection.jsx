@@ -5,7 +5,6 @@ import { GetBookDetails } from "../context/BookDetailsContext";
 
 let CommentSection = ({ comments }) => {
   let { user } = GetUser();
-
   let { removeBookComment } = GetBookDetails();
 
   return (
