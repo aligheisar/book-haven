@@ -1,5 +1,5 @@
 import { nanoid } from "nanoid";
-import { createContext, useContext, useState } from "react";
+import { createContext, useCallback, useContext, useState } from "react";
 
 let NotifiContext = createContext();
 
@@ -8,14 +8,14 @@ export let GetNotifi = () => useContext(NotifiContext);
 let NotifiProvider = ({ children }) => {
   const [notifications, setNotifications] = useState([]);
 
-  let addNotif = (notif) => {
+  let addNotif = useCallback((notif) => {
     let id = nanoid();
     setNotifications((prev) => [...prev, { ...notif, id }]);
 
     setTimeout(() => {
       removeNotif(id);
     }, 3000);
-  };
+  }, []);
 
   let removeNotif = (id) => {
     setNotifications((prev) => prev.filter((i) => i.id !== id));
