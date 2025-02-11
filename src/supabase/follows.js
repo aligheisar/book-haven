@@ -1,8 +1,10 @@
 import { supabase } from "./client";
 import { firstLogin } from "./errorObj";
-import { currentUser } from "./user";
+import { getAuthUser } from "./user";
 
 export async function followUser(followingId) {
+  let currentUser = await getAuthUser();
+
   if (!currentUser) throw firstLogin;
 
   const { data, error } = await supabase.from("follows").insert({

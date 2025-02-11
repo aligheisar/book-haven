@@ -1,8 +1,10 @@
 import { supabase } from "./client";
 import { bookNotFoundError, firstLogin, somethingHappend } from "./errorObj";
-import { currentUser } from "./user";
+import { getAuthUser } from "./user";
 
 export async function isLiked(bookId) {
+  let currentUser = await getAuthUser();
+
   if (!currentUser) return false;
 
   const { data, error } = await supabase
@@ -18,6 +20,8 @@ export async function isLiked(bookId) {
 }
 
 async function likeBook(bookId) {
+  let currentUser = await getAuthUser();
+
   if (!currentUser) throw firstLogin;
 
   const { error } = await supabase.from("likes").insert({
@@ -31,6 +35,8 @@ async function likeBook(bookId) {
 }
 
 async function unLikeBook(bookId) {
+  let currentUser = await getAuthUser();
+
   if (!currentUser) throw firstLogin;
 
   const { error } = await supabase

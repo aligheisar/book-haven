@@ -160,12 +160,12 @@ let BookDetailsProvider = ({ children }) => {
 
     let newComment = {
       id: nanoid(),
-      created_at: generateUTCTimestamp(),
+      createdAt: generateUTCTimestamp(),
       content: commentContent.value,
       user: {
-        full_name: user.fullName,
+        fullName: user.fullName,
         username: user.username,
-        avatar_url: user.avatarUrl,
+        avatarUrl: user.avatarUrl,
       },
     };
 

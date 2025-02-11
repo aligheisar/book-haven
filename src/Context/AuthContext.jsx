@@ -25,7 +25,6 @@ export default function AuthProvider({ children }) {
           type: "success",
         });
         setUser(user);
-        window.location.reload(true);
       }
     } catch (error) {
       addNotif({
@@ -50,7 +49,6 @@ export default function AuthProvider({ children }) {
         });
         setUser(user);
       }
-      window.location.reload(true);
     } catch (error) {
       addNotif({
         ...formatError(error),
@@ -64,7 +62,12 @@ export default function AuthProvider({ children }) {
   let logoutUser = async () => {
     try {
       await logout();
-      window.location.reload(true);
+      setUser(null);
+      addNotif({
+        type: "success",
+        title: "Logged Out",
+        desc: "you successfuly logged out",
+      });
     } catch (error) {
       addNotif({
         ...formatError(error),

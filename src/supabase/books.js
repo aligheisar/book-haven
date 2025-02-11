@@ -3,7 +3,7 @@ import { BOOK_IMAGES } from "../config/constants";
 import { getUserByUsername } from "./shared";
 import { uploadBookImage } from "./storage";
 import { isLiked } from "./likes";
-import { currentUser, isFollow } from "./user";
+import { getAuthUser, isFollow } from "./user";
 import { bookAlreadyExist, firstLogin, userNotFoundError } from "./errorObj";
 
 export async function getBooks() {
@@ -49,6 +49,8 @@ export async function getBooksByUsername(username) {
 }
 
 export async function getCurrentUsersBooks(user) {
+  let currentUser = await getAuthUser();
+
   if (!currentUser) throw firstLogin;
 
   const { data, error } = await supabase
@@ -146,6 +148,8 @@ export async function addBook(
   image,
   genres,
 ) {
+  let currentUser = await getAuthUser();
+
   if (!currentUser) return firstLogin;
 
   const { data: checkExistData, error: checkExistError } = await supabase

@@ -64,6 +64,10 @@ let UserProvider = ({ children }) => {
     }
   }, [user, addNotif]);
 
+  let clearUserBooks = () => {
+    setUserBooks([]);
+  };
+
   let changeAvatar = async (file, fileName) => {
     try {
       let response = await changeUserInformation(user.username, "avatar", {
@@ -75,7 +79,7 @@ let UserProvider = ({ children }) => {
         const updatedAvatarUrl = `${response.avatar_url}?t=${new Date().getTime()}`;
         setUser((prevState) => ({
           ...prevState,
-          avatar_url: updatedAvatarUrl,
+          avatarUrl: updatedAvatarUrl,
         }));
         addNotif({
           title: "Avatar changes",
@@ -123,6 +127,7 @@ let UserProvider = ({ children }) => {
     userBooksLoading,
     setUser,
     fetchUserBooks,
+    clearUserBooks,
     setLoading,
     changeAvatar,
     changeFullName,

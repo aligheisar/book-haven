@@ -1,8 +1,10 @@
 import { supabase } from "./client";
-import { currentUser } from "./user";
+import { getAuthUser } from "./user";
 import { firstLogin } from "./errorObj";
 
 export async function addComment(bookId, content) {
+  let currentUser = await getAuthUser();
+
   if (!currentUser) throw firstLogin;
 
   const { data, error } = await supabase.from("comments").insert({

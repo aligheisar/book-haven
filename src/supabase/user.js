@@ -5,11 +5,11 @@ import { validateInputs } from "../util/validate";
 import { getUserByUsername } from "./shared";
 import { firstLogin, fullNameNotValid } from "./errorObj";
 
-export const {
-  data: { user: currentUser },
-} = await supabase.auth.getUser();
+export let getAuthUser = async () => (await supabase.auth.getUser()).data.user;
 
 export async function isFollow(userId) {
+  let currentUser = await getAuthUser();
+
   if (!currentUser) return false;
 
   const { data, error } = await supabase
@@ -25,6 +25,8 @@ export async function isFollow(userId) {
 }
 
 export async function follow(userId) {
+  let currentUser = await getAuthUser();
+
   if (!currentUser) throw firstLogin;
 
   let { error } = await supabase
@@ -37,6 +39,8 @@ export async function follow(userId) {
 }
 
 export async function unFollow(userId) {
+  let currentUser = await getAuthUser();
+
   if (!currentUser) throw firstLogin;
 
   let { error } = await supabase
