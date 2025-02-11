@@ -61,15 +61,8 @@ export default function AuthProvider({ children }) {
 
   let logoutUser = async () => {
     try {
-      setLoading(true);
       await logout();
-      setUser(null);
-      setLoading(true);
-      addNotif({
-        title: "Logged Out",
-        desc: "You logged out",
-        type: "normal",
-      });
+      window.location.reload(true);
     } catch (error) {
       addNotif({
         ...formatError(error),
