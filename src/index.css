@@ -47,6 +47,7 @@
 .custom-scroll-light::-webkit-scrollbar {
   border-radius: 999px;
   width: 8px;
+  height: 8px;
   background: rgb(var(--surface) / 0.6);
 }
 
@@ -62,6 +63,7 @@
 
 .custom-scroll-big::-webkit-scrollbar {
   width: 8px;
+  height: 8px;
   background: rgb(var(--surface));
 }
 

@@ -4,7 +4,7 @@ import Footer from "../../components/Footer";
 
 let MainLayout = () => {
   return (
-    <div className="custom-scroll-big flex h-full flex-col overflow-y-auto overflow-x-hidden">
+    <div className="custom-scroll-big flex h-full flex-col overflow-y-auto">
       <Navbar />
       <main className="mb-4 flex-1 bg-background px-11">
         <Outlet />
