@@ -5,6 +5,7 @@ import BookNotFound from "./BookNotFound";
 import BookInformation from "../components/BookInformation";
 import AddComment from "../components/AddComment";
 import CommentSection from "../components/CommentSection";
+import BookDetailMenu from "../components/BookDetailsMenu";
 
 let BookDetails = () => {
   let { data, error, pageLoading } = GetBookDetails();
@@ -14,7 +15,8 @@ let BookDetails = () => {
 
   return (
     <section className="mx-auto flex max-w-[720px] flex-col">
-      <header className="mx-auto flex h-96 w-fit gap-6 py-7">
+      <header className="relative mx-auto flex h-96 w-fit gap-6 py-7">
+        <BookDetailMenu />
         <BookImage url={data.imageUrl} />
         <BookInformation data={data} />
       </header>
