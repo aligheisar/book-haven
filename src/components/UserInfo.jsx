@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Button from "./ui/Button.tsx";
+import FollowButton from "./ui/FollowButton";
 import { GetBookDetails } from "../context/BookDetailsContext";
 import { GetUser } from "../context/UserContext";
 
@@ -21,13 +21,10 @@ let UserInfo = () => {
         </div>
       </Link>
       {user?.username !== data.user.username && (
-        <Button
-          onClick={toggleFollow}
-          varient="outlined"
-          className="relative h-fit rounded px-2 py-[2px] text-sm"
-        >
-          {data.isUserFollow ? "Following" : "Follow"}
-        </Button>
+        <FollowButton
+          isFollow={data.isUserFollow}
+          toggleFollow={toggleFollow}
+        />
       )}
     </section>
   );
