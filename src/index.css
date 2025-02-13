@@ -92,7 +92,7 @@
 .backdrop {
   opacity: 0;
 
-  &>section {
+  &>section.backdrop-child {
     translate: 0 -20px;
     opacity: 1;
   }
@@ -101,7 +101,7 @@
 .backdrop.active {
   opacity: 1;
 
-  &>section {
+  &>section.backdrop-child {
     translate: 0 0;
     opacity: 1;
   }
