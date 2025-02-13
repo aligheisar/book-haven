@@ -11,7 +11,7 @@ let UserProfileHeader = ({ data, user, toggleFollowUser }) => {
             {data.fullName}
           </h2>
           <p className="mb-1 text-center text-primary">{data.username}</p>
-          {user.username !== data.username && (
+          {user?.username !== data.username && (
             <FollowButton
               toggleFollow={toggleFollowUser}
               isFollow={data.isUserFollow}
