@@ -1,11 +1,11 @@
 import { createPortal } from "react-dom";
-import "./Uploading.css";
+import "./FloatingSpinner.css";
 
-let Loading = () => {
+let FloatingSpinner = ({ title }) => {
   return createPortal(
     <section className="absolute left-1/2 top-1/2 flex size-40 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-lg bg-secondary-surface/80 pt-10 shadow-lg backdrop-blur-xl">
       <div className="loading-items">
-        <h1 className="text-2xl">Uploading</h1>
+        <h1 className="text-2xl">{title}</h1>
         <span className="radial"></span>
         <span className="radial d1"></span>
         <span className="radial d2"></span>
@@ -15,4 +15,4 @@ let Loading = () => {
   );
 };
 
-export default Loading;
+export default FloatingSpinner;
