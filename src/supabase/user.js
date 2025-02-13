@@ -3,7 +3,7 @@ import { supabase } from "./client";
 import { uploadAvatarImage } from "./storage";
 import { validateInputs } from "../util/validate";
 import { getUserByUsername } from "./shared";
-import { firstLogin, fullNameNotValid } from "./errorObj";
+import { firstLogin, fullNameNotValid, userNotFoundError } from "./errorObj";
 
 export let getAuthUser = async () => (await supabase.auth.getUser()).data.user;
 
@@ -116,4 +116,16 @@ export async function changeUserInformation(username, colName, value) {
     default:
       throw new Error("field is invalid");
   }
+}
+
+export async function userPagebyUsername(username) {
+  const { data, error } = await supabase.rpc("get_user_details_with_books", {
+    target_username: username,
+  });
+
+  if (error) throw error;
+
+  if (!data[0]) throw userNotFoundError;
+
+  return { success: true, data: data[0] };
 }
