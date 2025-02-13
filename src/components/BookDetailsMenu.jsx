@@ -1,8 +1,8 @@
 import { GetBookDetails } from "../context/BookDetailsContext";
 import { GetUser } from "../context/UserContext";
-import Menu from "./Menu/Menu";
-import MenuItem from "./Menu/MenuItem";
-import MenuSeparator from "./Menu/MenuSeparator";
+import Menu from "./menu/Menu";
+import MenuItem from "./menu/MenuItem";
+import MenuSeparator from "./menu/MenuSeparator";
 
 let BookDetailsMenu = () => {
   let { data } = GetBookDetails();
