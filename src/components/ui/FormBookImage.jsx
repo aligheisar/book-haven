@@ -4,7 +4,12 @@ import { Trash } from "./Icons";
 import BookPlaceholderImage from "../BookImagePlaceholder";
 import BookCoverContainer from "./BookCoverContainer";
 
-let FormBookImage = ({ url, handleFileChange, handleRemoveFile }) => {
+let FormBookImage = ({
+  className,
+  url,
+  handleFileChange,
+  handleRemoveFile,
+}) => {
   let fileInput = useRef();
 
   let openImagePicker = () => {
@@ -19,7 +24,10 @@ let FormBookImage = ({ url, handleFileChange, handleRemoveFile }) => {
 
   return (
     <BookCoverContainer
-      className="relative h-80 outline outline-secondary-surface"
+      className={cn(
+        "relative h-80 outline outline-secondary-surface",
+        className,
+      )}
       onClick={openImagePicker}
     >
       <span
