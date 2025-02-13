@@ -1,8 +1,9 @@
 import { BrowserRouter } from "react-router-dom";
+import NetworkProvider from "./NetworkContext";
+import NotifiProvider from "./NotifiContext";
+import ModalProvider from "./ModalContext";
 import UserProvider from "./UserContext";
 import AuthProvider from "./AuthContext";
-import NotifiProvider from "./NotifiContext";
-import NetworkProvider from "./NetworkContext";
 
 let Providers = ({ children }) => {
   return (
@@ -18,9 +19,11 @@ let Providers = ({ children }) => {
     >
       <NetworkProvider>
         <NotifiProvider>
-          <UserProvider>
-            <AuthProvider>{children}</AuthProvider>
-          </UserProvider>
+          <ModalProvider>
+            <UserProvider>
+              <AuthProvider>{children}</AuthProvider>
+            </UserProvider>
+          </ModalProvider>
         </NotifiProvider>
       </NetworkProvider>
     </BrowserRouter>

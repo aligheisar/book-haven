@@ -38,8 +38,6 @@ let NewBookProvider = ({ children }) => {
   let handleFormSubmit = async (e, formData) => {
     e.preventDefault();
 
-    console.log(formData);
-
     let formValues = {
       title: formData.title.value,
       description: formData.description.value,
