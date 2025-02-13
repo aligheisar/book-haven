@@ -1,6 +1,7 @@
 import Loading from "../components/Loading";
 import { GetUser } from "../context/UserContext";
 import { GetBookDetails } from "../context/BookDetailsContext";
+import PageContainer from "../components/PageContainer";
 import BookDetailsHeader from "../components/BookDetailsHeader";
 import BookNotFound from "./BookNotFound";
 import AddComment from "../components/AddComment";
@@ -16,13 +17,13 @@ let BookDetails = () => {
   let isOwner = user ? user.username === data.user.username : false;
 
   return (
-    <section className="mx-auto flex max-w-[720px] flex-col">
+    <PageContainer>
       <BookDetailsHeader data={data} isOwner={isOwner} />
       <section className="flex flex-col gap-2">
         <AddComment />
         <CommentSection comments={data.comments} />
       </section>
-    </section>
+    </PageContainer>
   );
 };
 
