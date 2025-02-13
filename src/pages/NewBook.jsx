@@ -7,7 +7,7 @@ import FormInput from "../components/ui/FormInput";
 import FormTextarea from "../components/ui/FormTextarea";
 import FormBookImage from "../components/ui/FormBookImage";
 import SectionTitle from "../components/SectionTitle";
-import Uploading from "../components/Uploading";
+import FloatingSpinner from "../components/FloatingSpinner";
 
 let NewBook = () => {
   let {
@@ -37,7 +37,7 @@ let NewBook = () => {
 
   return (
     <section className="flex h-full w-full items-center justify-center">
-      {uploading && <Uploading />}
+      {uploading && <FloatingSpinner title="uploading" />}
       <section className="flex w-full max-w-[720px] flex-col gap-4 rounded-xl bg-surface px-3 py-4">
         <SectionTitle>New Book</SectionTitle>
         <form
