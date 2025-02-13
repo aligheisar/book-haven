@@ -35,7 +35,7 @@ let Modal = ({ children, onOpen, onClose, className, ...props }) => {
         onClick={(e) => e.stopPropagation()}
         {...props}
         className={cn(
-          "absolute right-12 top-16 rounded-md bg-surface p-2 shadow-lg transition-all duration-300",
+          "backdrop-child absolute right-12 top-16 rounded-md bg-surface p-2 shadow-lg transition-all duration-300",
           className,
         )}
       >

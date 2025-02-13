@@ -29,7 +29,11 @@ let Input = forwardRef<HTMLInputElement, InputProps>(
 
     return (
       <section className={classes}>
-        <span className="absolute left-2 top-1/2 -translate-y-1/2">{icon}</span>
+        {icon && (
+          <span className="absolute left-2 top-1/2 -translate-y-1/2">
+            {icon}
+          </span>
+        )}
         <input
           ref={ref}
           className={cn([
