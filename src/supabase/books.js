@@ -192,3 +192,19 @@ export async function getGenres() {
 
   return { success: true, data: data.map((i) => i.name) };
 }
+
+export async function removeBook(title) {
+  let currentUser = await getAuthUser();
+
+  if (!currentUser) return firstLogin;
+
+  let { error } = await supabase
+    .from("books")
+    .delete()
+    .ilike("title", title)
+    .eq("user_id", currentUser.id);
+
+  if (error) throw error;
+
+  return { success: true };
+}
