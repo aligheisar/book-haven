@@ -115,7 +115,7 @@ let BookDetailsHeader = ({ data, isOwner }) => {
           <EditableBookDetails data={data} />
         ) : (
           <>
-            <BookImage url={data.imageUrl} />
+            <BookImage url={data.imageUrl} bg="bg-surface" />
             <BookInformation data={data} />
           </>
         )}

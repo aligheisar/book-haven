@@ -22,12 +22,14 @@ let UserBooks = () => {
         userBooks.length > 0 &&
         userBooks.map((i) => (
           <BookCard
+            className="bg-secondary-surface"
             key={i.id}
             title={i.title}
             price={i.price}
             image={i.imageUrl}
             fullName={i.fullName}
             username={i.username}
+            bg="bg-background/70"
           />
         ))
       )}

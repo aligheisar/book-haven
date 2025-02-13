@@ -1,13 +1,13 @@
 import BookImagePlaceholder from "./BookImagePlaceholder";
 import BookCoverContainer from "./ui/BookCoverContainer";
 
-let BookImage = ({ url }) => {
+let BookImage = ({ url, bg = "bg-background/60" }) => {
   return (
     <BookCoverContainer>
       {url ? (
         <img className="h-full w-full object-cover" src={url} alt="" />
       ) : (
-        <BookImagePlaceholder />
+        <BookImagePlaceholder bg={bg} />
       )}
     </BookCoverContainer>
   );

@@ -9,6 +9,7 @@ let BookCard = ({
   image,
   fullName,
   username,
+  bg,
   ...props
 }) => {
   let navigate = useNavigate();
@@ -23,12 +24,12 @@ let BookCard = ({
     <article
       onClick={handleClick}
       className={cn(
-        "flex h-44 w-64 shrink-0 gap-2 rounded-lg bg-secondary-surface p-[6px]",
+        "flex h-44 w-64 shrink-0 gap-2 rounded-lg bg-surface p-[6px] shadow-xl",
         className,
       )}
       {...props}
     >
-      <BookImage url={image} />
+      <BookImage url={image} bg={bg} />
       <div className="flex flex-col justify-between py-2 pb-3">
         <h3 className="font-serif text-xl text-text">{title}</h3>
         <div className="flex flex-col gap-1">
