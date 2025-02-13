@@ -10,7 +10,13 @@ import SectionTitle from "../components/SectionTitle";
 import Uploading from "../components/Uploading";
 
 let NewBook = () => {
-  let { handleFileChange, image, handleFormSubmit, uploading } = GetNewBook();
+  let {
+    handleFileChange,
+    handleRemoveFile,
+    image,
+    handleFormSubmit,
+    uploading,
+  } = GetNewBook();
 
   const [formData, setFormData] = useState({
     title: { value: "", error: null },
@@ -39,7 +45,11 @@ let NewBook = () => {
           className="flex flex-col gap-4"
         >
           <div className="flex flex-1 gap-3">
-            <FormBookImage handleFileChange={handleFileChange} url={image} />
+            <FormBookImage
+              handleRemoveFile={handleRemoveFile}
+              handleFileChange={handleFileChange}
+              url={image}
+            />
             <div className="flex flex-1 flex-col gap-2">
               <FormInput
                 label="Title"

@@ -99,6 +99,11 @@ let NewBookProvider = ({ children }) => {
     if (imageUrl) setImage(imageUrl);
   };
 
+  let handleRemoveFile = () => {
+    setImage(null);
+    setImageFile(null);
+  };
+
   const filteredGenres = useMemo(() => {
     return genres.filter(
       (genre) =>
@@ -148,6 +153,7 @@ let NewBookProvider = ({ children }) => {
     image,
     handleFormSubmit,
     handleFileChange,
+    handleRemoveFile,
     handleGenreInputFocus,
     handleGenreInputBlur,
     handleGenreInputChange,
