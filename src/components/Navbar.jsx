@@ -8,7 +8,7 @@ import { GetUser } from "../context/UserContext";
 let Navbar = () => {
   let { user } = GetUser();
   return (
-    <nav className="fixed left-0 top-0 flex h-14 w-full items-center justify-between bg-surface px-11 text-text">
+    <nav className="fixed left-0 top-0 flex h-14 w-full items-center justify-between bg-surface px-11 text-text shadow-xl">
       <Link to="/">
         <h1 className="select-none font-serif text-4xl text-primary">
           Book Haven
