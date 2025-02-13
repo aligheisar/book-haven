@@ -11,7 +11,9 @@ let BookInformation = ({ data }) => {
       <div className="flex flex-col gap-2">
         <Title>{data.title}</Title>
         <Description>{data.description}</Description>
-        <GenreContainer className="max-h-14" genres={data.genres} />
+        {data.genres && data.genres.length > 0 && (
+          <GenreContainer className="max-h-14" genres={data.genres} />
+        )}
         <Price>{data.price}</Price>
       </div>
       <div className="flex flex-col gap-2">
