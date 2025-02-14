@@ -4,6 +4,7 @@ import NotifiProvider from "./NotifiContext";
 import ModalProvider from "./ModalContext";
 import UserProvider from "./UserContext";
 import AuthProvider from "./AuthContext";
+import NotificationsProvider from "./NotificationsContext";
 
 let Providers = ({ children }) => {
   return (
@@ -21,7 +22,9 @@ let Providers = ({ children }) => {
         <NotifiProvider>
           <ModalProvider>
             <UserProvider>
-              <AuthProvider>{children}</AuthProvider>
+              <NotificationsProvider>
+                <AuthProvider>{children}</AuthProvider>
+              </NotificationsProvider>
             </UserProvider>
           </ModalProvider>
         </NotifiProvider>
