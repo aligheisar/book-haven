@@ -62,8 +62,6 @@ let BookDetailsProvider = ({ children }) => {
       return;
     }
 
-    let prevState = bookDetails;
-
     setBookDetails((prev) => ({
       ...prev,
       isUserLiked: !prev.isUserLiked,
@@ -73,7 +71,7 @@ let BookDetailsProvider = ({ children }) => {
     try {
       await toggleLike(bookDetails.id);
     } catch (error) {
-      setBookDetails(prevState);
+      await fetchBook();
     }
   };
 
@@ -87,8 +85,6 @@ let BookDetailsProvider = ({ children }) => {
       return;
     }
 
-    let prevState = bookDetails;
-
     setBookDetails((prev) => ({
       ...prev,
       isUserFollow: !prev.isUserFollow,
@@ -97,7 +93,7 @@ let BookDetailsProvider = ({ children }) => {
     try {
       await toggleFollow(targetUsername);
     } catch (error) {
-      setBookDetails(prevState);
+      await fetchBook();
     }
   };
 
