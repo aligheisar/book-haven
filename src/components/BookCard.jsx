@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { cn } from "../util/cn.ts";
 import BookImage from "./BookImage";
+import { trimLong } from "../util/format";
 
 let BookCard = ({
   className,
@@ -34,7 +35,7 @@ let BookCard = ({
         <h3 className="font-serif text-xl text-text">{title}</h3>
         <div className="flex flex-col gap-1">
           <Link onClick={(e) => e.stopPropagation()} to={`/users/${username}`}>
-            <p className="text-sm text-primary">{fullName}</p>
+            <p className="text-sm text-primary">{trimLong(fullName, 15)}</p>
           </Link>
           <span className="font-serif text-sm text-text">${price}</span>
         </div>

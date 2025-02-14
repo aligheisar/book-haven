@@ -19,8 +19,12 @@ let AccountInformation = () => {
         title="Full Name"
         content={user.fullName}
       />
-      <NonEditableText title="Email" content={user.email} />
-      <NonEditableText title="Username" content={user.username} />
+      <NonEditableText title="Email" threshold={25} content={user.email} />
+      <NonEditableText
+        title="Username"
+        threshold={20}
+        content={user.username}
+      />
     </section>
   );
 };

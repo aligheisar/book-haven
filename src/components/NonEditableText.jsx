@@ -1,6 +1,7 @@
 import { cn } from "../util/cn.ts";
+import { trimLong } from "../util/format";
 
-let NonEditableText = ({ className, props, content, title }) => {
+let NonEditableText = ({ className, props, content, threshold, title }) => {
   return (
     <h2
       className={cn([
@@ -11,7 +12,7 @@ let NonEditableText = ({ className, props, content, title }) => {
     >
       <span className="font-serif text-base opacity-45">{title}:</span>
 
-      {content}
+      {trimLong(content, threshold)}
     </h2>
   );
 };

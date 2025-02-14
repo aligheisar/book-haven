@@ -36,3 +36,7 @@ export const generateUTCTimestamp = () => {
 
   return utcTimestamp;
 };
+
+export const trimLong = (text, threshold = 25) => {
+  return text.length > threshold ? `${text.slice(0, threshold - 3)}...` : text;
+};

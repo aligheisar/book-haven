@@ -14,7 +14,7 @@ let useScroll = (element, activeItem, _eachItem, _gap, _visibleItems) => {
 
       let orZero = (value) => Math.max(value, 0);
 
-      let thereshold = _visibleItems * _eachItem;
+      let threshold = _visibleItems * _eachItem;
 
       let calcTop = Math.max((_eachItem + _gap) * activeItem, 0);
       let calcT = orZero((_eachItem + _gap) * (activeItem - _visibleItems + 1));
@@ -22,7 +22,7 @@ let useScroll = (element, activeItem, _eachItem, _gap, _visibleItems) => {
 
       let { scrollTop } = element.current;
 
-      if (calcTop - scrollTop >= thereshold) {
+      if (calcTop - scrollTop >= threshold) {
         scrollTo(smooth, calcT);
       } else if (calcTop - scrollTop <= -_eachItem) {
         scrollTo(smooth, calcB);
