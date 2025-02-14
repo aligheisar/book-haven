@@ -14,7 +14,7 @@ let NotifiItem = ({ notif, className }) => {
   };
 
   let classes = cn(
-    "notif-item transition-opacity overflow-hidden duration-300 px-3 py-2 pb-3 relative rounded-md text-text fill-text w-full backdrop-blur-xl shadow-lg",
+    "notif-item transition-opacity overflow-hidden duration-300 px-3 py-2 pb-3 relative fill-text text-text rounded-md w-full backdrop-blur-xl shadow-lg",
     varients[notif?.type],
     className,
   );
@@ -24,7 +24,7 @@ let NotifiItem = ({ notif, className }) => {
       <Button
         varient="outlined"
         onClick={() => removeNotif(notif.id)}
-        className="absolute right-2 top-2 h-fit cursor-pointer border-none p-1"
+        className="absolute right-2 top-2 h-fit cursor-pointer border-none fill-inherit p-1 opacity-80"
       >
         <Close inher size={14} onClick />
       </Button>
