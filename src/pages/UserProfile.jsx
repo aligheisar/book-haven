@@ -99,9 +99,9 @@ let UserProfile = () => {
         data={userData}
         user={user}
       />
-      <GridSection>
-        {userData.books && userData.books.length > 0 ? (
-          userData.books.map((i) => (
+      {userData.books && userData.books.length > 0 ? (
+        <GridSection>
+          {userData.books.map((i) => (
             <BookCard
               key={i.title}
               fullName={i.user.fullName}
@@ -111,13 +111,13 @@ let UserProfile = () => {
               username={i.user.username}
               bg="bg-background"
             />
-          ))
-        ) : (
-          <p className="w-full pt-6 text-center text-secondary-text/60">
-            No book available
-          </p>
-        )}
-      </GridSection>
+          ))}
+        </GridSection>
+      ) : (
+        <p className="w-full pt-6 text-center text-secondary-text/60">
+          No book available
+        </p>
+      )}
     </PageContainer>
   );
 };
