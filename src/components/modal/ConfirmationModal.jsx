@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import useKeybordShortcuts from "../../hooks/use-keybord-shortcuts";
 import Backdrop from "../Backdrop";
 import Button from "../ui/Button.tsx";
 
@@ -18,6 +19,11 @@ let ConfirmationModal = ({ title, desc, onClose, closeModal }) => {
       closeModal();
     }, 300);
   };
+
+  useKeybordShortcuts({
+    27: { func: () => handleCloseModal() },
+    13: { func: () => handleCloseModal(true) },
+  });
 
   return (
     <Backdrop ref={backdropRef} onClose={() => handleCloseModal(false)}>
