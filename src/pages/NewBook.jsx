@@ -52,6 +52,7 @@ let NewBook = () => {
             />
             <div className="flex flex-1 flex-col gap-2">
               <FormInput
+                autoFocus
                 label="Title"
                 placeholder="Enter book title"
                 name="title"
