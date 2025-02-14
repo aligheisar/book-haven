@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import ProfileCard from "./ProfileCard";
+import NotificationsButton from "./NotificationsButton";
 import { Search } from "./ui/Icons";
 import Button from "./ui/Button.tsx";
 import Input from "./ui/Input.tsx";
@@ -21,7 +22,10 @@ let Navbar = () => {
         icon={<Search inher />}
       />
       {user ? (
-        <ProfileCard user={user} />
+        <div className="flex items-center gap-2">
+          <NotificationsButton />
+          <ProfileCard user={user} />
+        </div>
       ) : (
         <ul className="flex list-none items-center gap-2">
           <li>
