@@ -13,6 +13,7 @@ let UserInfo = () => {
       <Link to={`/users/${data.user.username}`}>
         <div className="flex items-center gap-2 rounded-full bg-surface p-1 pr-3">
           <img
+            draggable={false}
             src={data.user.avatarUrl}
             className="size-7 rounded-full"
             alt="user"

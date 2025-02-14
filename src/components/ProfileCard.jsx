@@ -34,6 +34,7 @@ let ProfileCard = ({ user }) => {
       >
         <p>{user.fullName}</p>
         <img
+          draggable={false}
           width={37}
           height={37}
           src={user.avatarUrl}

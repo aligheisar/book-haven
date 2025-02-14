@@ -10,6 +10,7 @@ let Comment = ({ comment, currentUser, removeHandler }) => {
         <Link to={`/users/${comment.user.username}`}>
           <div className="flex h-6 items-center gap-2">
             <img
+              draggable={false}
               className="h-full rounded-full"
               src={comment.user.avatarUrl}
               alt={comment.user.fullName}

@@ -46,7 +46,12 @@ let FormBookImage = ({
         style={{ display: "none" }}
       />
       {url ? (
-        <img src={url} className="h-full w-full object-cover" alt="" />
+        <img
+          draggable={false}
+          src={url}
+          className="h-full w-full object-cover"
+          alt=""
+        />
       ) : (
         <BookPlaceholderImage />
       )}

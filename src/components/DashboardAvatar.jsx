@@ -42,6 +42,7 @@ let DashboardAvatar = ({ className, ...props }) => {
         </div>
       )}
       <img
+        draggable={false}
         className="h-full w-full object-cover"
         {...props}
         src={user.avatarUrl}
