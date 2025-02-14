@@ -17,6 +17,7 @@ export let validateInputs = (name, value) => {
     if (value.includes(" ")) return "Username can't contains space";
     if (value.includes("-")) return "Username can't contains '-'";
     if (value.length < 4) return "Username must be at least 4 char";
+    if (value.length > 17) return "Username can't be more than 17 char";
   }
   if (name === "fullName") {
     if (value.trim().length < 3) return "full Name must be at least 3 char";
