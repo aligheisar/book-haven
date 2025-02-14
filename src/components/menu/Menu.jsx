@@ -1,8 +1,8 @@
 import { createContext, useEffect, useRef, useState } from "react";
-import useKeybordShortcuts from "../../hooks/use-keybord-shortcuts.jsx";
+import useKeybordShortcuts from "../../hooks/use-keybord-shortcuts";
 import { cn } from "../../util/cn.ts";
-import { VerticalMenu } from "../ui/Icons.jsx";
-import Backdrop from "../Backdrop.jsx";
+import { VerticalMenu } from "../ui/Icons";
+import Backdrop from "../Backdrop";
 
 export let MenuContext = createContext();
 
