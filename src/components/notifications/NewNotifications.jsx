@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
-import Title from "./ui/Title";
-import Button from "./ui/Button.tsx";
-import Backdrop from "./Backdrop";
+import Title from "../ui/Title.jsx";
+import Button from "../ui/Button.tsx";
+import Backdrop from "../Backdrop.jsx";
 import NotificationRenderer from "./NotificationRenderer"
 
 let NewNotifications = ({ onClose, notifications }) => {

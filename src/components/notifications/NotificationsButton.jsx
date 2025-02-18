@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { GetNotifications } from "../context/NotificationsContext";
-import { Loading, Notification } from "./ui/Icons";
+import { GetNotifications } from "../../context/NotificationsContext";
+import { Loading, Notification } from "../ui/Icons";
 import NewNotifications from "./NewNotifications";
 
 let NotificationsButton = () => {
