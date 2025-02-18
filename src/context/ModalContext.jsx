@@ -12,6 +12,7 @@ const INITIONAL_STATE = {
 export const MODAL_NAMES = {
   CONFIRMATION: "CONFIRMATION",
   PROMPT: "PROMPT",
+  CUSTOM: "CUSTOM",
 };
 
 let ModalProvider = ({ children }) => {

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import ProfileCard from "./ProfileCard";
-import NotificationsButton from "./NotificationsButton";
+import NotificationsButton from "./notifications/NotificationsButton";
 import { Search } from "./ui/Icons";
 import Button from "./ui/Button.tsx";
 import Input from "./ui/Input.tsx";

@@ -2,6 +2,7 @@ import { createPortal } from "react-dom";
 import { GetModal, MODAL_NAMES } from "../../context/ModalContext";
 import ConfirmationModal from "./ConfirmationModal";
 import PromptModal from "./PromptModal";
+import CustomModal from "./CustomModal";
 
 let ModalRenderer = () => {
   let { activeModal, closeModal } = GetModal();
@@ -12,10 +13,10 @@ let ModalRenderer = () => {
         <ConfirmationModal {...activeModal.props} closeModal={closeModal} />
       ) : activeModal.name === MODAL_NAMES.PROMPT ? (
         <PromptModal {...activeModal.props} closeModal={closeModal} />
+      ) : activeModal.name === MODAL_NAMES.CUSTOM ? (
+        <CustomModal {...activeModal.props} closeModal={closeModal} />
       ) : null
-    ) : null,
-    document.body,
-  );
+    ) : null, document.body);
 };
 
 export default ModalRenderer;
