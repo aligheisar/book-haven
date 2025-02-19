@@ -36,16 +36,16 @@ export async function getNotifications() {
   return { success: true, data: formatNotification(data) };
 }
 
-export async function getUnseenNotifications() {
+export async function seenNotificaitons() {
   let currentUser = await getAuthUser();
 
-  if (!currentUser) throw firstLogin;
-
-  const { data, error } = await supabase.rpc("get_notifications_with_details", {
-    only_unseen: true,
-  });
+  let { error } = supabase
+    .from("notifications")
+    .update({ seen: true })
+    .eq("receiver_id", currentUser.id)
+    .eq("seen", false);
 
   if (error) throw error;
 
-  return { success: true, data: formatNotification(data) };
+  return { success: true };
 }

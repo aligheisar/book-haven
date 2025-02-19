@@ -8,7 +8,7 @@ import {
 } from "react";
 import { GetUser } from "./UserContext";
 import { GetNotifi } from "./NotifiContext";
-import { getNotifications } from "../supabase/notification";
+import { getNotifications, seenNotificaitons } from "../supabase/notification";
 import { supabase } from "../supabase/client";
 
 let NotificationsContext = createContext();
@@ -27,7 +27,7 @@ let NotificationsProvider = ({ children }) => {
     [notifications],
   );
 
-  let unSeenCount = notifications.length;
+  let unSeenCount = unSeenNotifs.length;
 
   let fetchNotifications = useCallback(
     async (turnLoadingOn = false) => {
@@ -53,6 +53,28 @@ let NotificationsProvider = ({ children }) => {
     },
     [addNotif],
   );
+
+  let markNotificationsAsSeen = async () => {
+    if (!unSeenNotifs.length) return;
+
+    let unSeenIds = notifications.filter((i) => !i.seen).map((i) => i.id);
+
+    try {
+      let response = await seenNotificaitons(unSeenIds);
+
+      console.log(response);
+      if (response.success) {
+        setNotifications((prev) => prev.map((i) => ({ ...i, seen: true })));
+      }
+    } catch (error) {
+      console.log(error);
+      addNotif({
+        type: "danger",
+        title: "Faild",
+        desc: "something happends",
+      });
+    }
+  };
 
   useEffect(() => {
     if (!user) return;
@@ -83,7 +105,13 @@ let NotificationsProvider = ({ children }) => {
     };
   }, [user, fetchNotifications]);
 
-  let value = { notifications, loading, unSeenNotifs, unSeenCount };
+  let value = {
+    notifications,
+    loading,
+    unSeenNotifs,
+    unSeenCount,
+    markNotificationsAsSeen,
+  };
   return (
     <NotificationsContext.Provider value={value}>
       {children}

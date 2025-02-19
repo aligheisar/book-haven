@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import Title from "../ui/Title.jsx";
 import Button from "../ui/Button.tsx";
 import Backdrop from "../Backdrop.jsx";
-import NotificationRenderer from "./NotificationRenderer"
+import NotificationRenderer from "./NotificationRenderer";
+import useKeybordShortcuts from "../../hooks/use-keybord-shortcuts";
 
 let NewNotifications = ({ onClose, notifications }) => {
   let backdropRef = useRef();
@@ -22,6 +23,14 @@ let NewNotifications = ({ onClose, notifications }) => {
     }, 0);
   }, []);
 
+  useKeybordShortcuts({
+    27: {
+      func: () => {
+        closeNotifications();
+      },
+    },
+  });
+
   return createPortal(
     <Backdrop
       ref={backdropRef}
@@ -30,18 +39,25 @@ let NewNotifications = ({ onClose, notifications }) => {
     >
       <section
         onClick={(e) => e.stopPropagation()}
-        className="backdrop-child flex flex-col h-[390px] gap-2 py-2 w-[320px] absolute right-44 top-16 rounded-md bg-secondary-surface text-text shadow-xl transition-all duration-300"
+        className="backdrop-child absolute right-44 top-16 flex h-[390px] w-[320px] flex-col gap-2 rounded-md bg-secondary-surface py-2 text-text shadow-xl transition-all duration-300"
       >
         <Title className="ml-3 text-2xl">Notifications</Title>
-        <div className="custom-scroll flex-1 flex overflow-y-auto flex-col">
+        <div className="custom-scroll flex flex-1 flex-col overflow-y-auto">
           {notifications && notifications.length > 0 ? (
-            <NotificationRenderer closeNotifications={closeNotifications} notifs={notifications} />
-
+            <NotificationRenderer
+              closeNotifications={closeNotifications}
+              notifs={notifications}
+            />
           ) : (
-            <p className="text-secondary-text h-full flex items-center justify-center">No new Notificaiton</p>
-          )}</div>
-        <Link to="/notifications" className="self-end mr-2">
-          <Button varient="dim" className="text-sm h-fit w-fit px-2 py-[2px]">see More</Button>
+            <p className="flex h-full items-center justify-center text-secondary-text">
+              No new Notificaiton
+            </p>
+          )}
+        </div>
+        <Link to="/notifications" className="mr-2 self-end">
+          <Button varient="dim" className="h-fit w-fit px-2 py-[2px] text-sm">
+            see More
+          </Button>
         </Link>
       </section>
     </Backdrop>,

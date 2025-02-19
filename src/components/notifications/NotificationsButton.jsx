@@ -4,9 +4,15 @@ import { Loading, Notification } from "../ui/Icons";
 import NewNotifications from "./NewNotifications";
 
 let NotificationsButton = () => {
-  let { loading, unSeenNotifs, unSeenCount } = GetNotifications();
+  let { loading, unSeenNotifs, unSeenCount, markNotificationsAsSeen } =
+    GetNotifications();
 
   const [isOpen, setIsOpen] = useState(false);
+
+  let handleClose = () => {
+    setIsOpen(false);
+    markNotificationsAsSeen();
+  };
 
   return (
     <>
@@ -31,10 +37,7 @@ let NotificationsButton = () => {
         )}
       </span>
       {isOpen && (
-        <NewNotifications
-          notifications={unSeenNotifs}
-          onClose={() => setIsOpen(false)}
-        />
+        <NewNotifications notifications={unSeenNotifs} onClose={handleClose} />
       )}
     </>
   );
