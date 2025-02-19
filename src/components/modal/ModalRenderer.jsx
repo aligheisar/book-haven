@@ -16,7 +16,9 @@ let ModalRenderer = () => {
       ) : activeModal.name === MODAL_NAMES.CUSTOM ? (
         <CustomModal {...activeModal.props} closeModal={closeModal} />
       ) : null
-    ) : null, document.body);
+    ) : null,
+    document.body,
+  );
 };
 
 export default ModalRenderer;

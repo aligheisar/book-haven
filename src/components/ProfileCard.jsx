@@ -42,8 +42,8 @@ let ProfileCard = ({ user }) => {
       ),
       className: "right-12 top-16",
       closeOnClick: true,
-    })
-  }
+    });
+  };
 
   return (
     <section
@@ -59,7 +59,7 @@ let ProfileCard = ({ user }) => {
         alt="profile"
         className="h-[37px] w-[37px] rounded-full bg-surface"
       />
-    </section >
+    </section>
   );
 };
 

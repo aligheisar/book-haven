@@ -3,7 +3,14 @@ import { cn } from "../../util/cn.ts";
 import useKeybordShortcuts from "../../hooks/use-keybord-shortcuts.jsx";
 import Backdrop from "../Backdrop.jsx";
 
-let CustomModal = ({ children, onClose, closeModal, closeOnClick, className, ...props }) => {
+let CustomModal = ({
+  children,
+  onClose,
+  closeModal,
+  closeOnClick,
+  className,
+  ...props
+}) => {
   let backdropRef = useRef();
 
   useEffect(() => {
@@ -27,7 +34,9 @@ let CustomModal = ({ children, onClose, closeModal, closeOnClick, className, ...
   return (
     <Backdrop ref={backdropRef} onClose={handleCloseModal}>
       <section
-        onClick={(e) => { !closeOnClick && e.stopPropagation() }}
+        onClick={(e) => {
+          !closeOnClick && e.stopPropagation();
+        }}
         {...props}
         className={cn(
           "backdrop-child absolute rounded-md bg-surface p-2 shadow-lg transition-all duration-300",
