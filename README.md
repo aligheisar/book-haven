@@ -26,8 +26,8 @@ A social platform for book lovers! This app allows users to sign up, log in, and
 ### **1️⃣ Clone the Repository**
 
 ```sh
-git clone https://github.com/your-username/book-social-app.git
-cd book-social-app
+git clone https://github.com/aligheisar/book-haven.git
+cd book-haven
 ```
 
 ### **2️⃣ Install Dependencies**
